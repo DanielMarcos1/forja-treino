@@ -427,22 +427,24 @@ function ResultadoView({
       </div>
 
       {/* day content (active day for screen, all days for print) */}
-      <div className="mt-6 space-y-6 print:space-y-10">
+      <div className="mt-6 space-y-6 print:space-y-0">
         <DiaCard dia={dia} index={activeDay} className="print:hidden" />
-        <div className="hidden print:block space-y-10">
+        <div className="hidden print:block">
           {treino.dias.map((d, i) => (
-            <DiaCard key={i} dia={d} index={i} />
+            <div key={i} className="print-page">
+              <DiaCard dia={d} index={i} className="print-day" />
+            </div>
           ))}
         </div>
       </div>
 
       {/* tips */}
       {treino.dicas?.length > 0 && (
-        <div className="mt-8 rounded-3xl bg-secondary/30 p-7">
+        <div className="mt-8 rounded-3xl bg-secondary/30 p-7 print-tips print:bg-white print:p-0">
           <h3 className="font-display text-xl">Dicas</h3>
           <ul className="mt-3 space-y-2 text-foreground/90">
             {treino.dicas.map((d, i) => (
-              <li key={i} className="flex gap-2"><span className="text-primary">•</span> {d}</li>
+              <li key={i} className="flex gap-2 print-avoid-break"><span className="text-primary">•</span> {d}</li>
             ))}
           </ul>
         </div>
@@ -467,9 +469,9 @@ function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; clas
       </div>
       <p className="mt-3 text-sm text-muted-foreground"><span className="font-semibold text-foreground">Aquecimento:</span> {dia.aquecimento}</p>
 
-      <div className="mt-6 grid gap-3">
+      <div className="mt-6 grid gap-3 ex-grid">
         {dia.exercicios.map((e, i) => (
-          <div key={i} className="rounded-2xl border border-border bg-background p-4">
+          <div key={i} className="rounded-2xl border border-border bg-background p-4 ex-card print-avoid-break">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <div className="font-semibold">{e.nome}</div>
               <div className="text-sm text-muted-foreground">descanso {e.descanso}</div>
