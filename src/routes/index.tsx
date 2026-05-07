@@ -55,7 +55,7 @@ function Index() {
           </div>
 
           {/* Diamond composition */}
-          <div className="relative mx-auto aspect-square w-full max-w-[420px]">
+          <div className="relative mx-auto mt-10 aspect-square w-[78%] max-w-[420px] md:mt-0 md:w-full">
             <div className="absolute inset-0 diamond bg-secondary" />
             <div className="absolute inset-[10%] diamond bg-primary" />
             <div className="absolute inset-[24%] diamond bg-navy" />
