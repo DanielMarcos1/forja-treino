@@ -195,9 +195,9 @@ function Gerar() {
                           type="button"
                           key={n.v}
                           onClick={() => update("nivel", n.v)}
-                          className={`rounded-2xl border p-4 text-left transition ${
+                          className={`rounded-2xl border-2 p-4 text-left transition ${
                             form.nivel === n.v
-                              ? "border-primary bg-primary/10"
+                              ? "border-primary bg-primary/15 ring-2 ring-primary/30"
                               : "border-border hover:border-foreground/30"
                           }`}
                         >
