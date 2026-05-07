@@ -9,7 +9,6 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import faviconUrl from "../assets/favicon.svg?url";
 
 function NotFoundComponent() {
   return (
@@ -77,12 +76,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Monte um plano de treino personalizado em segundos com inteligência artificial." },
       { name: "author", content: "Forja" },
       { property: "og:title", content: "Forja — Treinos personalizados por IA" },
-      { property: "og:description", content: "Monte um plano de treino personalizado em segundos com IA." },
+      { property: "og:description", content: "Monte um plano de treino personalizado em segundos com inteligência artificial." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "Forja — Treinos personalizados por IA" },
+      { name: "twitter:description", content: "Monte um plano de treino personalizado em segundos com inteligência artificial." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/eb9521e2-47db-4e0c-b43c-83913b265246" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/eb9521e2-47db-4e0c-b43c-83913b265246" },
     ],
     links: [
-      { rel: "icon", type: "image/svg+xml", href: faviconUrl },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
