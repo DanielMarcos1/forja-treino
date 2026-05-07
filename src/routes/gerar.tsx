@@ -427,22 +427,24 @@ function ResultadoView({
       </div>
 
       {/* day content (active day for screen, all days for print) */}
-      <div className="mt-6 space-y-6 print:space-y-10">
+      <div className="mt-6 space-y-6 print:space-y-0">
         <DiaCard dia={dia} index={activeDay} className="print:hidden" />
-        <div className="hidden print:block space-y-10">
+        <div className="hidden print:block">
           {treino.dias.map((d, i) => (
-            <DiaCard key={i} dia={d} index={i} />
+            <div key={i} className="print-page">
+              <DiaCard dia={d} index={i} className="print-day" />
+            </div>
           ))}
         </div>
       </div>
 
       {/* tips */}
       {treino.dicas?.length > 0 && (
-        <div className="mt-8 rounded-3xl bg-secondary/30 p-7">
+        <div className="mt-8 rounded-3xl bg-secondary/30 p-7 print-tips print:bg-white print:p-0">
           <h3 className="font-display text-xl">Dicas</h3>
           <ul className="mt-3 space-y-2 text-foreground/90">
             {treino.dicas.map((d, i) => (
-              <li key={i} className="flex gap-2"><span className="text-primary">•</span> {d}</li>
+              <li key={i} className="flex gap-2 print-avoid-break"><span className="text-primary">•</span> {d}</li>
             ))}
           </ul>
         </div>
