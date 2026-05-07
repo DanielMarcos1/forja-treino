@@ -39,7 +39,8 @@ function Index() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                to="/gerar"
+                to="/login"
+                preload="intent"
                 className="inline-flex items-center justify-center rounded-full bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground shadow-md transition hover:brightness-95"
               >
                 Montar meu treino
@@ -92,7 +93,8 @@ function Index() {
           <h2 className="relative font-display text-3xl md:text-4xl">Pronto para forjar seu treino?</h2>
           <p className="relative mt-3 max-w-xl text-cream/80">Leva menos de um minuto. Sem cadastro.</p>
           <Link
-            to="/gerar"
+            to="/login"
+            preload="intent"
             className="relative mt-6 inline-flex items-center justify-center rounded-full bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground transition hover:brightness-95"
           >
             Começar agora

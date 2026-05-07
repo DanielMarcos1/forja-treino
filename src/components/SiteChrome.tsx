@@ -23,7 +23,8 @@ export function SiteHeader() {
           <Link to="/sobre" activeProps={{ className: "text-primary" }} className="hover:text-primary transition-colors">Sobre</Link>
         </nav>
         <Link
-          to="/gerar"
+          to="/login"
+          preload="intent"
           className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:brightness-95"
         >
           Começar
