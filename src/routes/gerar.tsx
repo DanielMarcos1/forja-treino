@@ -172,11 +172,11 @@ function Gerar() {
     <div className="min-h-screen">
       <SiteHeader />
       <Toaster richColors position="top-center" />
-      <main className="mx-auto max-w-4xl px-6 py-12">
+      <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-12">
         {!treino ? (
           <>
-            <div className="mb-8 flex items-center justify-between">
-              <h1 className="font-display text-3xl md:text-4xl">Vamos montar seu treino</h1>
+            <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <h1 className="font-display text-2xl sm:text-3xl md:text-4xl">Vamos montar seu treino</h1>
               <span className="text-sm text-muted-foreground">Etapa {step + 1} de 4</span>
             </div>
 
@@ -188,7 +188,7 @@ function Gerar() {
               />
             </div>
 
-            <div className="rounded-3xl bg-card p-8 shadow-sm md:p-10">
+            <div className="rounded-3xl bg-card p-5 shadow-sm sm:p-8 md:p-10">
               {step === 0 && (
                 <Step title="Sobre você">
                   <Field label="Sexo">
@@ -409,10 +409,10 @@ function ResultadoView({
   return (
     <div>
       {/* header */}
-      <div className="relative overflow-hidden rounded-3xl bg-navy p-8 text-cream md:p-10">
+      <div className="relative overflow-hidden rounded-3xl bg-navy p-6 text-cream sm:p-8 md:p-10">
         <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 diamond bg-primary/40" />
         <div className="pointer-events-none absolute -bottom-12 -left-8 h-36 w-36 diamond bg-secondary/40" />
-        <h1 className="relative font-display text-3xl md:text-4xl">{treino.titulo}</h1>
+        <h1 className="relative font-display text-2xl sm:text-3xl md:text-4xl">{treino.titulo}</h1>
         <p className="relative mt-3 max-w-2xl text-cream/85">{treino.resumo}</p>
         <div className="relative mt-6 flex flex-wrap gap-2">
           <Badge icon={<Dumbbell className="h-3.5 w-3.5" />}>{treino.diasPorSemana} dias/semana</Badge>
