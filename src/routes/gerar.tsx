@@ -469,9 +469,9 @@ function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; clas
       </div>
       <p className="mt-3 text-sm text-muted-foreground"><span className="font-semibold text-foreground">Aquecimento:</span> {dia.aquecimento}</p>
 
-      <div className="mt-6 grid gap-3">
+      <div className="mt-6 grid gap-3 ex-grid">
         {dia.exercicios.map((e, i) => (
-          <div key={i} className="rounded-2xl border border-border bg-background p-4">
+          <div key={i} className="rounded-2xl border border-border bg-background p-4 ex-card print-avoid-break">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <div className="font-semibold">{e.nome}</div>
               <div className="text-sm text-muted-foreground">descanso {e.descanso}</div>
