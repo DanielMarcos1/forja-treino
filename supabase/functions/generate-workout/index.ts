@@ -42,13 +42,12 @@ function validateInput(raw: any): { ok: true; data: any } | { ok: false; error: 
   const dias = clampInt(raw.dias, 1, 7, 3);
   const tempo = clampInt(raw.tempo, 15, 180, 45);
 
+  const ALLOWED_FOCO = ["Peito", "Costas", "Pernas", "Glúteos", "Gluteos", "Braços", "Bracos", "Core", "Cardio"];
   let foco: string[] = [];
   if (Array.isArray(raw.foco)) {
     foco = raw.foco
-      .filter((f: unknown) => typeof f === "string")
-      .slice(0, 10)
-      .map((f: string) => sanitizeText(f, 40))
-      .filter(Boolean);
+      .filter((f: unknown) => typeof f === "string" && ALLOWED_FOCO.includes(f))
+      .slice(0, 10);
   }
 
   const restricoes = sanitizeText(raw.restricoes, 500);
