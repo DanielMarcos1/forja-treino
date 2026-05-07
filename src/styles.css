@@ -135,4 +135,44 @@
 @media print {
   .no-print { display: none !important; }
   body { background: white; color: black; }
+
+  @page {
+    size: A4;
+    margin: 14mm 12mm;
+  }
+
+  /* Each day starts on a fresh page */
+  .print-page {
+    page-break-before: always;
+    break-before: page;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .print-page:first-child {
+    page-break-before: auto;
+    break-before: auto;
+  }
+
+  /* Don't break in the middle of an exercise card */
+  .print-avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Tighten spacing for print so a day fits on one page */
+  .print-day {
+    padding: 0 !important;
+    box-shadow: none !important;
+    background: white !important;
+    border-radius: 0 !important;
+  }
+  .print-day h2 { font-size: 18pt; margin: 0 0 6pt; }
+  .print-day .ex-card {
+    padding: 6pt 8pt !important;
+    border-radius: 8pt !important;
+    margin-bottom: 4pt;
+  }
+  .print-day p { margin: 4pt 0 !important; font-size: 10pt; }
+  .print-day .ex-grid { gap: 4pt !important; margin-top: 8pt !important; }
+  .print-tips { page-break-before: always; break-before: page; }
 }
