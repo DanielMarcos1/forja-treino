@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { SiteHeader, SiteFooter } from "@/components/SiteChrome";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -65,11 +65,25 @@ const LOCAIS = [
 const FOCOS = ["Peito", "Costas", "Pernas", "Glúteos", "Braços", "Core", "Cardio"];
 
 function Gerar() {
+  const navigate = useNavigate();
+  const [authChecked, setAuthChecked] = useState(false);
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(initial);
   const [loading, setLoading] = useState(false);
   const [treino, setTreino] = useState<Treino | null>(null);
   const [activeDay, setActiveDay] = useState(0);
+
+  useEffect(() => {
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      if (!session) navigate({ to: "/login" });
+      else setAuthChecked(true);
+    });
+    supabase.auth.getSession().then(({ data }) => {
+      if (!data.session) navigate({ to: "/login" });
+      else setAuthChecked(true);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [navigate]);
 
   const update = <K extends keyof Form>(k: K, v: Form[K]) => setForm((f) => ({ ...f, [k]: v }));
   const toggleFoco = (f: string) =>
@@ -144,6 +158,14 @@ function Gerar() {
     ].join("\n");
     navigator.clipboard.writeText(txt);
     toast.success("Treino copiado!");
+  }
+
+  if (!authChecked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      </div>
+    );
   }
 
   return (
