@@ -160,6 +160,14 @@ function Gerar() {
     toast.success("Treino copiado!");
   }
 
+  if (!authChecked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen">
       <SiteHeader />
