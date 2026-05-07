@@ -65,11 +65,25 @@ const LOCAIS = [
 const FOCOS = ["Peito", "Costas", "Pernas", "Glúteos", "Braços", "Core", "Cardio"];
 
 function Gerar() {
+  const navigate = useNavigate();
+  const [authChecked, setAuthChecked] = useState(false);
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(initial);
   const [loading, setLoading] = useState(false);
   const [treino, setTreino] = useState<Treino | null>(null);
   const [activeDay, setActiveDay] = useState(0);
+
+  useEffect(() => {
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      if (!session) navigate({ to: "/login" });
+      else setAuthChecked(true);
+    });
+    supabase.auth.getSession().then(({ data }) => {
+      if (!data.session) navigate({ to: "/login" });
+      else setAuthChecked(true);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [navigate]);
 
   const update = <K extends keyof Form>(k: K, v: Form[K]) => setForm((f) => ({ ...f, [k]: v }));
   const toggleFoco = (f: string) =>
