@@ -1,12 +1,10 @@
 import { Link } from "@tanstack/react-router";
+import faviconUrl from "@/assets/favicon.svg?url";
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <Link to="/" className={`flex items-center gap-2 font-display font-extrabold text-xl text-foreground ${className}`}>
-      <span className="relative inline-flex h-8 w-8 items-center justify-center">
-        <span className="absolute inset-0 diamond bg-primary" />
-        <span className="absolute inset-1 diamond bg-secondary" />
-      </span>
+      <img src={faviconUrl} alt="Forja" className="h-8 w-8" />
       Forja
     </Link>
   );
