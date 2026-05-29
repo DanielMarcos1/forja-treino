@@ -4,7 +4,7 @@ import faviconUrl from "@/assets/favicon.svg?url";
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <Link to="/" className={`flex items-center gap-2 font-display font-extrabold text-xl text-foreground ${className}`}>
-      <img src={faviconUrl} alt="Forja" className="h-8 w-8" />
+      <img src={faviconUrl} alt="Forja — Treinos por IA" className="h-8 w-8" />
       Forja
     </Link>
   );

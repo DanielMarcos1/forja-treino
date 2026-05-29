@@ -4,10 +4,10 @@ import { SiteHeader, SiteFooter } from "@/components/SiteChrome";
 export const Route = createFileRoute("/sobre")({
   head: () => ({
     meta: [
-      { title: "Sobre — Forja" },
-      { name: "description", content: "Sobre a Forja: treinos personalizados gerados por IA." },
-      { property: "og:title", content: "Sobre — Forja" },
-      { property: "og:description", content: "Como a Forja monta seu treino com IA." },
+      { title: "Sobre a Forja — Treinos personalizados por IA" },
+      { name: "description", content: "Conheça a Forja: como usamos IA para montar planos de treino personalizados em segundos." },
+      { property: "og:title", content: "Sobre a Forja — Treinos personalizados por IA" },
+      { property: "og:description", content: "Como a Forja monta seu treino com IA — metodologia, etapas e cuidados antes de começar." },
     ],
   }),
   component: Sobre,
