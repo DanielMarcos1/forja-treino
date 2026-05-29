@@ -83,6 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:description", content: "Monte um plano de treino personalizado em segundos com inteligência artificial." },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/eb9521e2-47db-4e0c-b43c-83913b265246" },
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/eb9521e2-47db-4e0c-b43c-83913b265246" },
+      { name: "google-site-verification", content: "jiU4RxIxQafAw7odWNx5L_RUw2SAQ5zTpg6zCFxRM2w" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
