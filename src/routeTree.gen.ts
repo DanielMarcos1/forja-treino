@@ -17,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as Char123LocaleChar125IndexRouteImport } from './routes/{-$locale}/index'
 import { Route as Char123LocaleChar125SobreRouteImport } from './routes/{-$locale}/sobre'
 import { Route as Char123LocaleChar125LoginRouteImport } from './routes/{-$locale}/login'
+import { Route as Char123LocaleChar125GerarRouteImport } from './routes/{-$locale}/gerar'
 
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
@@ -61,6 +62,12 @@ const Char123LocaleChar125LoginRoute =
     path: '/{-$locale}/login',
     getParentRoute: () => rootRouteImport,
   } as any)
+const Char123LocaleChar125GerarRoute =
+  Char123LocaleChar125GerarRouteImport.update({
+    id: '/{-$locale}/gerar',
+    path: '/{-$locale}/gerar',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -68,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/{-$locale}/gerar': typeof Char123LocaleChar125GerarRoute
   '/{-$locale}/login': typeof Char123LocaleChar125LoginRoute
   '/{-$locale}/sobre': typeof Char123LocaleChar125SobreRoute
   '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
@@ -78,6 +86,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/{-$locale}/gerar': typeof Char123LocaleChar125GerarRoute
   '/{-$locale}/login': typeof Char123LocaleChar125LoginRoute
   '/{-$locale}/sobre': typeof Char123LocaleChar125SobreRoute
   '/{-$locale}': typeof Char123LocaleChar125IndexRoute
@@ -89,6 +98,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/{-$locale}/gerar': typeof Char123LocaleChar125GerarRoute
   '/{-$locale}/login': typeof Char123LocaleChar125LoginRoute
   '/{-$locale}/sobre': typeof Char123LocaleChar125SobreRoute
   '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
@@ -101,6 +111,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/sitemap.xml'
     | '/sobre'
+    | '/{-$locale}/gerar'
     | '/{-$locale}/login'
     | '/{-$locale}/sobre'
     | '/{-$locale}/'
@@ -111,6 +122,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/sitemap.xml'
     | '/sobre'
+    | '/{-$locale}/gerar'
     | '/{-$locale}/login'
     | '/{-$locale}/sobre'
     | '/{-$locale}'
@@ -121,6 +133,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/sitemap.xml'
     | '/sobre'
+    | '/{-$locale}/gerar'
     | '/{-$locale}/login'
     | '/{-$locale}/sobre'
     | '/{-$locale}/'
@@ -132,6 +145,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
+  Char123LocaleChar125GerarRoute: typeof Char123LocaleChar125GerarRoute
   Char123LocaleChar125LoginRoute: typeof Char123LocaleChar125LoginRoute
   Char123LocaleChar125SobreRoute: typeof Char123LocaleChar125SobreRoute
   Char123LocaleChar125IndexRoute: typeof Char123LocaleChar125IndexRoute
@@ -195,6 +209,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LocaleChar125LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/{-$locale}/gerar': {
+      id: '/{-$locale}/gerar'
+      path: '/{-$locale}/gerar'
+      fullPath: '/{-$locale}/gerar'
+      preLoaderRoute: typeof Char123LocaleChar125GerarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -204,6 +225,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
+  Char123LocaleChar125GerarRoute: Char123LocaleChar125GerarRoute,
   Char123LocaleChar125LoginRoute: Char123LocaleChar125LoginRoute,
   Char123LocaleChar125SobreRoute: Char123LocaleChar125SobreRoute,
   Char123LocaleChar125IndexRoute: Char123LocaleChar125IndexRoute,
@@ -211,3 +233,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
