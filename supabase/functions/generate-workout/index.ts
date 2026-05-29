@@ -23,6 +23,8 @@ function sanitizeText(v: unknown, maxLen: number): string {
   return v.replace(/[\r\n\t\u0000-\u001F\u007F]/g, " ").trim().slice(0, maxLen);
 }
 
+const ALLOWED_LOCALES = ["pt", "en", "es", "fr"];
+
 function validateInput(raw: any): { ok: true; data: any } | { ok: false; error: string } {
   if (!raw || typeof raw !== "object") return { ok: false, error: "Payload inválido" };
 
@@ -51,8 +53,10 @@ function validateInput(raw: any): { ok: true; data: any } | { ok: false; error: 
   }
 
   const restricoes = sanitizeText(raw.restricoes, 500);
+  const localeRaw = String(raw.locale ?? "pt").toLowerCase();
+  const locale = ALLOWED_LOCALES.includes(localeRaw) ? localeRaw : "pt";
 
-  return { ok: true, data: { sexo, nivel, objetivo, local, idade, dias, tempo, foco, restricoes } };
+  return { ok: true, data: { sexo, nivel, objetivo, local, idade, dias, tempo, foco, restricoes, locale } };
 }
 
 Deno.serve(async (req) => {
