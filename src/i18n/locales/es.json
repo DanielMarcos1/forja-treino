@@ -66,11 +66,18 @@
     "f_focus": "Grupos preferidos (opcional)",
     "f_restrictions": "Restricciones o lesiones (opcional)",
     "f_restrictions_placeholder": "Ej.: dolor lumbar, evitar sentadilla libre...",
-    "sex": { "masculino": "Masculino", "feminino": "Femenino", "outro": "Prefiero no decir" },
+    "sex": {
+      "masculino": "Masculino",
+      "feminino": "Femenino",
+      "outro": "Prefiero no decir"
+    },
     "level": {
-      "iniciante": "Principiante", "iniciante_desc": "Poca o ninguna experiencia",
-      "intermediario": "Intermedio", "intermediario_desc": "Entrena hace algunos meses",
-      "avancado": "Avanzado", "avancado_desc": "Entrena hace más de 1 año"
+      "iniciante": "Principiante",
+      "iniciante_desc": "Poca o ninguna experiencia",
+      "intermediario": "Intermedio",
+      "intermediario_desc": "Entrena hace algunos meses",
+      "avancado": "Avanzado",
+      "avancado_desc": "Entrena hace más de 1 año"
     },
     "goal": {
       "hipertrofia": "Hipertrofia",
@@ -86,8 +93,13 @@
       "ar-livre": "Al aire libre"
     },
     "focus": {
-      "Peito": "Pecho", "Costas": "Espalda", "Pernas": "Piernas",
-      "Glúteos": "Glúteos", "Braços": "Brazos", "Core": "Core", "Cardio": "Cardio"
+      "Peito": "Pecho",
+      "Costas": "Espalda",
+      "Pernas": "Piernas",
+      "Glúteos": "Glúteos",
+      "Braços": "Brazos",
+      "Core": "Core",
+      "Cardio": "Cardio"
     },
     "minutes_unit": "{{n}} min",
     "back": "Atrás",
@@ -108,7 +120,8 @@
     "min_per_session": "{{n}} min/sesión",
     "warmup": "Calentamiento",
     "stretch": "Estiramiento",
-    "tips": "Consejos"
+    "tips": "Consejos",
+    "err_quota": "Has alcanzado el límite de 3 entrenos este mes. Inténtalo el próximo mes."
   },
   "meta": {
     "home_title": "Forja — Tu entreno, creado por IA",

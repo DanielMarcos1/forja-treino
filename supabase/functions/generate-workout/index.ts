@@ -83,6 +83,34 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+    const userId = userData.user.id;
+
+    // --- Monthly quota: 3 generations per calendar month ---
+    const MONTHLY_LIMIT = 3;
+    const now = new Date();
+    const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString();
+    const { count: usedCount, error: countErr } = await supabaseClient
+      .from("workout_generations")
+      .select("id", { count: "exact", head: true })
+      .gte("created_at", monthStart);
+    if (countErr) {
+      console.error("quota count error:", countErr);
+      return new Response(JSON.stringify({ error: "Erro ao verificar limite mensal" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if ((usedCount ?? 0) >= MONTHLY_LIMIT) {
+      return new Response(JSON.stringify({
+        error: "quota_exceeded",
+        message: "Limite mensal de 3 treinos atingido.",
+        used: usedCount,
+        limit: MONTHLY_LIMIT,
+      }), {
+        status: 429,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -91,6 +119,7 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
 
     const raw = await req.json();
     const validated = validateInput(raw);
@@ -219,7 +248,15 @@ Gere exatamente ${input.dias} dias de treino.`;
       });
     }
     const treino = JSON.parse(call.function.arguments);
-    return new Response(JSON.stringify({ treino }), {
+
+    // Record this generation toward the monthly quota
+    const { error: insErr } = await supabaseClient
+      .from("workout_generations")
+      .insert({ user_id: userId });
+    if (insErr) console.error("quota insert error:", insErr);
+
+    const remaining = Math.max(0, MONTHLY_LIMIT - ((usedCount ?? 0) + 1));
+    return new Response(JSON.stringify({ treino, quota: { used: (usedCount ?? 0) + 1, limit: MONTHLY_LIMIT, remaining } }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {

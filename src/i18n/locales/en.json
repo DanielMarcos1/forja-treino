@@ -66,11 +66,18 @@
     "f_focus": "Preferred muscle groups (optional)",
     "f_restrictions": "Restrictions or injuries (optional)",
     "f_restrictions_placeholder": "e.g., lower back pain, avoid back squats...",
-    "sex": { "masculino": "Male", "feminino": "Female", "outro": "Prefer not to say" },
+    "sex": {
+      "masculino": "Male",
+      "feminino": "Female",
+      "outro": "Prefer not to say"
+    },
     "level": {
-      "iniciante": "Beginner", "iniciante_desc": "Little or no experience",
-      "intermediario": "Intermediate", "intermediario_desc": "Training for a few months",
-      "avancado": "Advanced", "avancado_desc": "Training for over a year"
+      "iniciante": "Beginner",
+      "iniciante_desc": "Little or no experience",
+      "intermediario": "Intermediate",
+      "intermediario_desc": "Training for a few months",
+      "avancado": "Advanced",
+      "avancado_desc": "Training for over a year"
     },
     "goal": {
       "hipertrofia": "Hypertrophy",
@@ -86,8 +93,13 @@
       "ar-livre": "Outdoors"
     },
     "focus": {
-      "Peito": "Chest", "Costas": "Back", "Pernas": "Legs",
-      "Glúteos": "Glutes", "Braços": "Arms", "Core": "Core", "Cardio": "Cardio"
+      "Peito": "Chest",
+      "Costas": "Back",
+      "Pernas": "Legs",
+      "Glúteos": "Glutes",
+      "Braços": "Arms",
+      "Core": "Core",
+      "Cardio": "Cardio"
     },
     "minutes_unit": "{{n}} min",
     "back": "Back",
@@ -108,7 +120,8 @@
     "min_per_session": "{{n}} min/session",
     "warmup": "Warm-up",
     "stretch": "Stretching",
-    "tips": "Tips"
+    "tips": "Tips",
+    "err_quota": "You have reached the limit of 3 workouts this month. Try again next month."
   },
   "meta": {
     "home_title": "Forja — Your workout, built by AI",
