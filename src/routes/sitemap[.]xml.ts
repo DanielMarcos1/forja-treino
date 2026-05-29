@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
-const BASE_URL = "https://forja-treino.lovable.app";
+const BASE_URL = "https://forjatreino.com";
 
 interface SitemapEntry {
   path: string;
