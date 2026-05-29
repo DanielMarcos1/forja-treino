@@ -90,11 +90,14 @@ function Gerar() {
       });
       if (error) {
         const msg = error.message || "";
-        if (msg.includes("429")) toast.error(t("gerar.err_rate"));
+        const ctx = (error as { context?: { error?: string } }).context;
+        if (ctx?.error === "quota_exceeded" || msg.includes("quota_exceeded")) toast.error(t("gerar.err_quota"));
+        else if (msg.includes("429")) toast.error(t("gerar.err_rate"));
         else if (msg.includes("402")) toast.error(t("gerar.err_credits"));
         else toast.error(t("gerar.err_generic"));
         return;
       }
+      if (data?.error === "quota_exceeded") { toast.error(t("gerar.err_quota")); return; }
       if (data?.treino) { setTreino(data.treino); setActiveDay(0); }
       else toast.error(t("gerar.err_response"));
     } catch (e) {
