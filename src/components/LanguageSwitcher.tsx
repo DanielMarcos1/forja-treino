@@ -4,12 +4,25 @@ import { useEffect, useRef, useState } from "react";
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE, type Locale, isLocale } from "@/i18n";
 import { useLocale } from "@/i18n/useLocale";
 
-const LABELS: Record<Locale, { flag: string; code: string; name: string }> = {
-  pt: { flag: "🇧🇷", code: "PT", name: "Português" },
-  en: { flag: "🇺🇸", code: "EN", name: "English" },
-  es: { flag: "🇪🇸", code: "ES", name: "Español" },
-  fr: { flag: "🇫🇷", code: "FR", name: "Français" },
+const LABELS: Record<Locale, { country: string; code: string; name: string }> = {
+  pt: { country: "br", code: "PT", name: "Português" },
+  en: { country: "us", code: "EN", name: "English" },
+  es: { country: "es", code: "ES", name: "Español" },
+  fr: { country: "fr", code: "FR", name: "Français" },
 };
+
+function Flag({ country, className = "" }: { country: string; className?: string }) {
+  return (
+    <img
+      src={`https://flagcdn.com/w40/${country}.png`}
+      srcSet={`https://flagcdn.com/w80/${country}.png 2x`}
+      alt=""
+      aria-hidden
+      className={`inline-block h-4 w-6 rounded-[3px] object-cover shadow-[0_0_0_1px_rgba(0,0,0,0.08)] ${className}`}
+      loading="lazy"
+    />
+  );
+}
 
 const LOCALE_KEY = "forja.locale";
 
