@@ -1,0 +1,10 @@
+# Forja
+
+> Forja monta planos de treino personalizados em segundos usando inteligência artificial, com base no seu perfil, objetivo e tempo disponível.
+
+Forja é um gerador de treinos por IA. O usuário responde algumas perguntas (sexo, idade, nível, objetivo, local de treino, dias por semana, tempo por sessão) e recebe um plano estruturado com séries, repetições, descanso, aquecimento e alongamento.
+
+## Pages
+
+- [Início](/): Apresentação do produto e CTA para gerar o treino.
+- [Sobre](/sobre): Como funciona a Forja, metodologia e aviso de saúde.
