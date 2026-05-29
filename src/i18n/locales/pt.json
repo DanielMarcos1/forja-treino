@@ -1,0 +1,129 @@
+{
+  "nav": {
+    "home": "Início",
+    "generate": "Montar treino",
+    "about": "Sobre",
+    "start": "Começar"
+  },
+  "switcher": {
+    "label": "Idioma"
+  },
+  "footer": {
+    "rights": "Treinos por IA"
+  },
+  "home": {
+    "badge": "Potencializado por IA",
+    "h1_part1": "Seu treino,",
+    "h1_highlight": "forjado",
+    "h1_part2": "sob medida.",
+    "lede": "Conte seu objetivo, nível e tempo disponível. Em segundos, a IA monta um plano completo com séries, repetições e descanso.",
+    "cta_primary": "Montar meu treino",
+    "cta_secondary": "Como funciona",
+    "features": {
+      "personalized_title": "Personalizado",
+      "personalized_desc": "Adaptado ao seu nível, objetivo e equipamentos disponíveis.",
+      "fast_title": "Rápido",
+      "fast_desc": "Pronto em segundos — pare de improvisar na academia.",
+      "structured_title": "Estruturado",
+      "structured_desc": "Séries, reps, descanso, aquecimento e alongamento."
+    },
+    "cta_strip_title": "Pronto para forjar seu treino?",
+    "cta_strip_lede": "Leva menos de um minuto. Sem cadastro.",
+    "cta_strip_button": "Começar agora"
+  },
+  "sobre": {
+    "h1": "Sobre a Forja",
+    "intro": "Forja é um montador de treinos que usa inteligência artificial para criar planos personalizados em segundos. Você responde algumas perguntas sobre seu perfil, objetivo e tempo disponível — e recebe um treino estruturado, com séries, repetições, descanso, aquecimento e alongamento.",
+    "how_h2": "Como funciona",
+    "step1": "Conte seu perfil: idade, sexo, nível e objetivo.",
+    "step2": "Indique onde treina, quantos dias por semana e quanto tempo por sessão.",
+    "step3": "A IA monta seu plano e você pode imprimir, copiar ou refazer.",
+    "warn_h2": "Aviso importante",
+    "warn": "O Forja gera sugestões de treino. Antes de iniciar qualquer programa de exercícios, consulte um profissional de saúde, especialmente se você tiver lesões ou condições médicas."
+  },
+  "login": {
+    "h1": "Entrar na Forja",
+    "lede": "Entre com sua conta Google para gerar seu plano de treino personalizado.",
+    "button": "Continuar com Google",
+    "error_generic": "Não foi possível entrar. Tente novamente.",
+    "error_unexpected": "Erro inesperado."
+  },
+  "gerar": {
+    "title": "Vamos montar seu treino",
+    "step_of": "Etapa {{current}} de {{total}}",
+    "step0_title": "Sobre você",
+    "step1_title": "Seu objetivo",
+    "step2_title": "Tempo disponível",
+    "step3_title": "Detalhes finais",
+    "f_sex": "Sexo",
+    "f_age": "Idade",
+    "f_age_placeholder": "Ex.: 28",
+    "f_level": "Nível",
+    "f_goal": "O que você quer alcançar?",
+    "f_place": "Onde você vai treinar?",
+    "f_days": "Dias por semana",
+    "f_minutes": "Minutos por sessão",
+    "f_focus": "Grupos preferidos (opcional)",
+    "f_restrictions": "Restrições ou lesões (opcional)",
+    "f_restrictions_placeholder": "Ex.: dor lombar, evitar agachamento livre...",
+    "sex": { "masculino": "Masculino", "feminino": "Feminino", "outro": "Prefiro não dizer" },
+    "level": {
+      "iniciante": "Iniciante", "iniciante_desc": "Pouca ou nenhuma experiência",
+      "intermediario": "Intermediário", "intermediario_desc": "Treina há alguns meses",
+      "avancado": "Avançado", "avancado_desc": "Treina há mais de 1 ano"
+    },
+    "goal": {
+      "hipertrofia": "Hipertrofia",
+      "emagrecimento": "Emagrecimento",
+      "condicionamento": "Condicionamento",
+      "forca": "Força",
+      "mobilidade": "Mobilidade"
+    },
+    "place": {
+      "academia": "Academia completa",
+      "casa-equip": "Casa com equipamentos",
+      "casa-livre": "Casa sem equipamentos",
+      "ar-livre": "Ar livre"
+    },
+    "focus": {
+      "Peito": "Peito", "Costas": "Costas", "Pernas": "Pernas",
+      "Glúteos": "Glúteos", "Braços": "Braços", "Core": "Core", "Cardio": "Cardio"
+    },
+    "minutes_unit": "{{n}} min",
+    "back": "Voltar",
+    "next": "Próximo",
+    "generate": "Gerar treino",
+    "generating": "Gerando seu treino...",
+    "err_rate": "Muitas requisições. Tente novamente em instantes.",
+    "err_credits": "Créditos de IA esgotados. Adicione créditos no workspace.",
+    "err_generic": "Não foi possível gerar o treino. Tente novamente.",
+    "err_unexpected": "Erro inesperado. Tente novamente.",
+    "err_response": "Resposta inesperada da IA.",
+    "copied": "Treino copiado!",
+    "restart": "Refazer",
+    "copy": "Copiar",
+    "print": "Imprimir / PDF",
+    "day_label": "Dia {{letter}}",
+    "days_per_week": "{{n}} dias/semana",
+    "min_per_session": "{{n}} min/sessão",
+    "warmup": "Aquecimento",
+    "stretch": "Alongamento",
+    "tips": "Dicas"
+  },
+  "meta": {
+    "home_title": "Forja — Seu treino, montado por IA",
+    "home_desc": "Monte um treino personalizado em segundos com base no seu perfil, objetivo e tempo disponível.",
+    "home_og_title": "Forja — Seu treino, montado por IA",
+    "home_og_desc": "Treinos personalizados, gerados por IA, prontos em segundos.",
+    "sobre_title": "Sobre a Forja — Treinos personalizados por IA",
+    "sobre_desc": "Conheça a Forja: como usamos IA para montar planos de treino personalizados em segundos.",
+    "sobre_og_desc": "Como a Forja monta seu treino com IA — metodologia, etapas e cuidados antes de começar.",
+    "gerar_title": "Montar treino — Forja",
+    "gerar_desc": "Responda algumas perguntas e receba um treino personalizado por IA.",
+    "gerar_og_desc": "Crie seu plano de treino personalizado com nossa inteligência artificial em segundos — séries, repetições, descanso e dicas.",
+    "login_title": "Entrar na Forja — Acesse seu gerador de treinos",
+    "login_desc": "Entre com sua conta Google para acessar o gerador de treinos personalizados por IA da Forja.",
+    "root_title": "Forja — Treinos personalizados por IA",
+    "root_desc": "Monte um plano de treino personalizado em segundos com inteligência artificial."
+  }
+}
