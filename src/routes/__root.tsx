@@ -4,11 +4,17 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
+  useNavigate,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
+import "@/i18n";
+import { DEFAULT_LOCALE, detectBrowserLocale, isLocale } from "@/i18n";
+import { LOCALE_KEY } from "@/components/LanguageSwitcher";
 
 function NotFoundComponent() {
   return (
