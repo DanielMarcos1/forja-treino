@@ -1,98 +1,74 @@
-## Visão geral
+# Multi-language support (PT, EN, ES, FR)
 
-Um app web onde a pessoa preenche um formulário com seus dados e objetivos, e uma IA (via Lovable AI Gateway) gera um plano de treino personalizado, exibido de forma bonita e exportável.
+Add full internationalization to Forja with locale-prefixed URLs, browser-language detection on first visit, a header switcher, and translated metadata across all routes.
 
-A identidade visual seguirá a referência enviada: roxo lavanda (#A6A8F0), laranja vibrante (#FFAB0D), navy profundo (#091E21) e creme (#FFF6E9), com cantos arredondados generosos, formas geométricas (losangos), e tipografia bold (Gilroy/Inter SemiBold para títulos).
+## Languages & defaults
+- Supported: `pt` (Portuguese-BR, default), `en`, `es`, `fr`.
+- Default for unmatched browser languages: `pt`.
 
-## Páginas (rotas)
+## URL strategy
+- Locale lives in a path prefix: `/`, `/en`, `/es`, `/fr` (no `/pt` — PT served at root to keep current URLs intact and preserve SEO).
+- Use TanStack's optional path param `{-$locale}` so a single route file covers both `/about` (pt) and `/en/about` (en).
+- Restructure routes:
 
-```
-/                  Landing — hero, como funciona, CTA "Montar meu treino"
-/gerar             Formulário multi-step + resultado do treino
-/sobre             Sobre o app e a metodologia
-```
-
-## Formulário — campos coletados
-
-Inputs que a IA usará para personalizar:
-
-- **Sexo**: masculino, feminino, prefiro não dizer
-- **Idade**
-- **Nível**: iniciante, intermediário, avançado
-- **Objetivo**: hipertrofia, emagrecimento, condicionamento, força, mobilidade
-- **Local de treino**: academia completa, casa com equipamentos, casa sem equipamentos, ar livre
-- **Dias por semana**: 1 a 7
-- **Tempo por sessão**: 20, 30, 45, 60, 90 min
-- **Foco/grupos preferidos** (opcional, multi-select): peito, costas, pernas, glúteos, braços, core, cardio
-- **Restrições/lesões** (texto livre, opcional)
-
-UX em formato step-by-step (3–4 passos) com barra de progresso, validação por etapa e resumo antes de gerar.
-
-## Geração com IA
-
-- Edge function `generate-workout` chama o **Lovable AI Gateway** com `google/gemini-3-flash-preview`
-- Saída **estruturada via tool calling** (JSON garantido) com este formato:
-
-```
-{
-  "titulo": "...",
-  "resumo": "...",
-  "diasPorSemana": 4,
-  "duracaoMin": 45,
-  "dias": [
-    {
-      "nome": "Dia A — Peito e Tríceps",
-      "aquecimento": "...",
-      "exercicios": [
-        { "nome": "...", "series": 4, "reps": "8-10", "descanso": "60s", "observacao": "..." }
-      ],
-      "alongamento": "..."
-    }
-  ],
-  "dicas": ["...", "..."]
-}
+```text
+src/routes/
+  __root.tsx
+  {-$locale}/
+    index.tsx     -> /, /en, /es, /fr
+    gerar.tsx     -> /gerar, /en/gerar, ...
+    sobre.tsx     -> /sobre, /en/sobre, ...
+    login.tsx     -> /login, /en/login, ...
 ```
 
-- Tratamento de erros 429 (rate limit) e 402 (créditos) com toasts amigáveis
+(File-based, dot-style: `{-$locale}.index.tsx`, `{-$locale}.gerar.tsx`, etc.)
 
-## Tela de resultado
+## Detection on first visit
+- Root component reads `navigator.language` on mount.
+- If user lands on `/` and detected locale ≠ `pt`, redirect once to the prefixed URL (`/en`, `/es`, `/fr`).
+- Persist explicit choice in `localStorage` (`forja.locale`); skip auto-redirect if a stored preference exists.
+- Manual `?lang=` query or switcher click always wins and is persisted.
 
-- Cabeçalho com título, objetivo, nível, dias/semana, duração
-- Tabs por dia de treino (Dia A, B, C…)
-- Cada exercício em card: nome, séries × reps, descanso, observação
-- Botões: **Refazer**, **Copiar**, **Imprimir/PDF** (via `window.print` com estilo dedicado)
-- Sem persistência por enquanto (sem login) — o treino vive na sessão
+## Header switcher
+- Dropdown beside the "Começar" button in `SiteHeader`, showing 🇧🇷 🇺🇸 🇪🇸 🇫🇷.
+- Selecting a language navigates to the same route under the new locale prefix and updates `localStorage`.
 
-## Identidade visual (design system)
+## i18n runtime
+- Add `react-i18next` + `i18next` (lightweight, SSR-friendly, no backend HTTP).
+- Translation files under `src/i18n/locales/{pt,en,es,fr}.json` with namespaces: `common`, `home`, `gerar`, `sobre`, `login`, `meta`.
+- `src/i18n/index.ts` initializes i18next with all 4 bundles inlined (no async load).
+- `LocaleProvider` in `__root.tsx`'s `RootComponent` reads `locale` from route params and calls `i18n.changeLanguage(locale ?? 'pt')` on change.
 
-Tokens em `src/styles.css` (oklch):
+## Translated content
+All user-visible strings in:
+- `SiteHeader` / `SiteFooter` (nav labels, CTA)
+- `index.tsx` (hero, features, CTA strip)
+- `gerar.tsx` (form labels, options, buttons, error/loading states)
+- `sobre.tsx`
+- `login.tsx`
+- Toast/error messages
 
-- `--background`: creme (#FFF6E9)
-- `--foreground`: navy (#091E21)
-- `--primary`: laranja (#FFAB0D), foreground navy
-- `--secondary`: lavanda (#A6A8F0), foreground navy
-- `--accent`: navy escuro para cards de destaque
-- `--radius`: 1.25rem (cantos bem arredondados como na referência)
+The `generate-workout` edge function gets a new optional `locale` field in the payload; system prompt switches language so the AI returns the plan in the user's language. Validation list values (sexo/nivel/etc.) stay in PT internally — only the prompt language changes.
 
-Elementos visuais:
+## SEO / metadata
+- Each route's `head()` becomes a function of `params.locale`, returning translated `title`, `description`, `og:*` from the `meta` namespace.
+- Add `<link rel="alternate" hreflang="…">` tags for each locale + `x-default` on every leaf.
+- Update `<html lang>` in `__root.tsx`'s `RootShell` to reflect active locale (read from router state).
+- Sitemap (`sitemap[.]xml.ts`) emits all 4 locale variants per route with hreflang annotations.
+- Canonical URL per route uses the locale-prefixed path.
 
-- Formas geométricas (losangos) sutis no fundo do hero
-- Cards com sombra suave e cantos grandes
-- Botão primário laranja, secundário lavanda
-- Tipografia: Inter (corpo) + um display bold para títulos (ex.: Plus Jakarta Sans ou Manrope, similar ao Gilroy)
-- Modo claro como padrão (a referência é luminosa); dark mode opcional num passo futuro
+## Switcher placement & a11y
+- `<select>` styled to match header, accessible label "Language / Idioma".
+- Mobile: same dropdown, compact.
 
-## Detalhes técnicos
+## Technical notes
+- Files to add: `src/i18n/index.ts`, `src/i18n/locales/{pt,en,es,fr}.json`, `src/components/LanguageSwitcher.tsx`.
+- Files to rename/move: `index.tsx`, `gerar.tsx`, `sobre.tsx`, `login.tsx` → under `{-$locale}.` prefix.
+- Files to edit: `SiteChrome.tsx`, `__root.tsx`, `sitemap[.]xml.ts`, `supabase/functions/generate-workout/index.ts`.
+- Packages: `bun add react-i18next i18next`.
+- All `<Link to="...">` calls updated to include `params={{ locale }}` (using current locale from `useParams({ strict: false })`).
 
-- TanStack Start + Tailwind v4, rotas em `src/routes/` (`index.tsx`, `gerar.tsx`, `sobre.tsx`)
-- Formulário com `react-hook-form` + `zod`
-- Componentes shadcn já disponíveis: `card`, `button`, `tabs`, `select`, `radio-group`, `checkbox`, `slider`, `progress`, `sonner` (toasts)
-- **Lovable Cloud**: ativar para hospedar a edge function `generate-workout` que chama o Lovable AI Gateway com `LOVABLE_API_KEY` (chave fica no servidor, nunca no cliente)
-- Sem banco de dados nesta versão
-
-## Fora de escopo (sugestões para depois)
-
-- Login + histórico de treinos salvos
-- Acompanhamento de progresso (cargas, check-ins)
-- Geração de imagem de capa do treino com IA
-- Exportar como PDF estilizado (além do print)
+## Out of scope
+- Translating dynamic AI-generated workout titles already returned by the model (handled via prompt language above).
+- Right-to-left languages (none in scope).
+- Server-side IP geolocation (browser-language only, per your choice).

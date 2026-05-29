@@ -1,0 +1,129 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "generate": "Créer un entraînement",
+    "about": "À propos",
+    "start": "Commencer"
+  },
+  "switcher": {
+    "label": "Langue"
+  },
+  "footer": {
+    "rights": "Entraînements par IA"
+  },
+  "home": {
+    "badge": "Propulsé par l'IA",
+    "h1_part1": "Votre entraînement,",
+    "h1_highlight": "forgé",
+    "h1_part2": "sur mesure.",
+    "lede": "Dites-nous votre objectif, votre niveau et le temps disponible. En quelques secondes, l'IA crée un plan complet avec séries, répétitions et repos.",
+    "cta_primary": "Créer mon entraînement",
+    "cta_secondary": "Comment ça marche",
+    "features": {
+      "personalized_title": "Personnalisé",
+      "personalized_desc": "Adapté à votre niveau, votre objectif et votre matériel disponible.",
+      "fast_title": "Rapide",
+      "fast_desc": "Prêt en quelques secondes — arrêtez d'improviser à la salle.",
+      "structured_title": "Structuré",
+      "structured_desc": "Séries, reps, repos, échauffement et étirements."
+    },
+    "cta_strip_title": "Prêt à forger votre entraînement ?",
+    "cta_strip_lede": "Moins d'une minute. Sans inscription.",
+    "cta_strip_button": "Commencer maintenant"
+  },
+  "sobre": {
+    "h1": "À propos de Forja",
+    "intro": "Forja est un générateur d'entraînements qui utilise l'intelligence artificielle pour créer des plans personnalisés en quelques secondes. Vous répondez à quelques questions sur votre profil, votre objectif et le temps disponible — et recevez un entraînement structuré avec séries, répétitions, repos, échauffement et étirements.",
+    "how_h2": "Comment ça marche",
+    "step1": "Indiquez votre profil : âge, sexe, niveau et objectif.",
+    "step2": "Précisez où vous vous entraînez, combien de jours par semaine et combien de temps par séance.",
+    "step3": "L'IA crée votre plan — imprimez-le, copiez-le ou recommencez.",
+    "warn_h2": "Avis important",
+    "warn": "Forja génère des suggestions d'entraînement. Avant de commencer tout programme d'exercice, consultez un professionnel de santé, surtout en cas de blessures ou de conditions médicales."
+  },
+  "login": {
+    "h1": "Se connecter à Forja",
+    "lede": "Connectez-vous avec votre compte Google pour générer votre plan d'entraînement personnalisé.",
+    "button": "Continuer avec Google",
+    "error_generic": "Impossible de vous connecter. Réessayez.",
+    "error_unexpected": "Erreur inattendue."
+  },
+  "gerar": {
+    "title": "Créons votre entraînement",
+    "step_of": "Étape {{current}} sur {{total}}",
+    "step0_title": "À propos de vous",
+    "step1_title": "Votre objectif",
+    "step2_title": "Temps disponible",
+    "step3_title": "Détails finaux",
+    "f_sex": "Sexe",
+    "f_age": "Âge",
+    "f_age_placeholder": "Ex. : 28",
+    "f_level": "Niveau",
+    "f_goal": "Que souhaitez-vous atteindre ?",
+    "f_place": "Où allez-vous vous entraîner ?",
+    "f_days": "Jours par semaine",
+    "f_minutes": "Minutes par séance",
+    "f_focus": "Groupes préférés (optionnel)",
+    "f_restrictions": "Restrictions ou blessures (optionnel)",
+    "f_restrictions_placeholder": "Ex. : douleur lombaire, éviter le squat libre...",
+    "sex": { "masculino": "Homme", "feminino": "Femme", "outro": "Préfère ne pas dire" },
+    "level": {
+      "iniciante": "Débutant", "iniciante_desc": "Peu ou pas d'expérience",
+      "intermediario": "Intermédiaire", "intermediario_desc": "S'entraîne depuis quelques mois",
+      "avancado": "Avancé", "avancado_desc": "S'entraîne depuis plus d'un an"
+    },
+    "goal": {
+      "hipertrofia": "Hypertrophie",
+      "emagrecimento": "Perte de gras",
+      "condicionamento": "Conditionnement",
+      "forca": "Force",
+      "mobilidade": "Mobilité"
+    },
+    "place": {
+      "academia": "Salle complète",
+      "casa-equip": "Maison avec matériel",
+      "casa-livre": "Maison sans matériel",
+      "ar-livre": "Plein air"
+    },
+    "focus": {
+      "Peito": "Pectoraux", "Costas": "Dos", "Pernas": "Jambes",
+      "Glúteos": "Fessiers", "Braços": "Bras", "Core": "Gainage", "Cardio": "Cardio"
+    },
+    "minutes_unit": "{{n}} min",
+    "back": "Retour",
+    "next": "Suivant",
+    "generate": "Générer l'entraînement",
+    "generating": "Génération de votre entraînement...",
+    "err_rate": "Trop de requêtes. Réessayez dans un instant.",
+    "err_credits": "Crédits IA épuisés. Ajoutez des crédits dans le workspace.",
+    "err_generic": "Impossible de générer l'entraînement. Réessayez.",
+    "err_unexpected": "Erreur inattendue. Réessayez.",
+    "err_response": "Réponse inattendue de l'IA.",
+    "copied": "Entraînement copié !",
+    "restart": "Recommencer",
+    "copy": "Copier",
+    "print": "Imprimer / PDF",
+    "day_label": "Jour {{letter}}",
+    "days_per_week": "{{n}} jours/semaine",
+    "min_per_session": "{{n}} min/séance",
+    "warmup": "Échauffement",
+    "stretch": "Étirements",
+    "tips": "Conseils"
+  },
+  "meta": {
+    "home_title": "Forja — Votre entraînement, créé par l'IA",
+    "home_desc": "Créez un entraînement personnalisé en quelques secondes selon votre profil, votre objectif et votre temps disponible.",
+    "home_og_title": "Forja — Votre entraînement, créé par l'IA",
+    "home_og_desc": "Entraînements personnalisés par IA, prêts en quelques secondes.",
+    "sobre_title": "À propos de Forja — Entraînements personnalisés par IA",
+    "sobre_desc": "Découvrez Forja : comment nous utilisons l'IA pour créer des plans d'entraînement personnalisés en quelques secondes.",
+    "sobre_og_desc": "Comment Forja crée votre entraînement avec l'IA — méthodologie, étapes et précautions.",
+    "gerar_title": "Créer un entraînement — Forja",
+    "gerar_desc": "Répondez à quelques questions et recevez un entraînement personnalisé par IA.",
+    "gerar_og_desc": "Créez votre plan d'entraînement personnalisé avec notre IA en quelques secondes — séries, répétitions, repos et conseils.",
+    "login_title": "Se connecter à Forja — Accédez à votre générateur d'entraînements",
+    "login_desc": "Connectez-vous avec Google pour accéder au générateur d'entraînements par IA de Forja.",
+    "root_title": "Forja — Entraînements personnalisés par IA",
+    "root_desc": "Créez un plan d'entraînement personnalisé en quelques secondes grâce à l'intelligence artificielle."
+  }
+}

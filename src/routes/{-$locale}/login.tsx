@@ -1,47 +1,56 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { SiteHeader, SiteFooter } from "@/components/SiteChrome";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { Loader2 } from "lucide-react";
+import { useLocale, localeParam } from "@/i18n/useLocale";
+import { isLocale, DEFAULT_LOCALE, type Locale } from "@/i18n";
+import { localizedHead } from "@/i18n/seo";
 
-export const Route = createFileRoute("/login")({
-  head: () => ({
-    meta: [
-      { title: "Entrar na Forja — Acesse seu gerador de treinos" },
-      { name: "description", content: "Entre com sua conta Google para acessar o gerador de treinos personalizados por IA da Forja." },
-    ],
-  }),
+export const Route = createFileRoute("/{-$locale}/login")({
+  head: ({ params }) => {
+    const locale: Locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
+    return localizedHead(locale, "/login", {
+      titleKey: "meta.login_title",
+      descKey: "meta.login_desc",
+    });
+  },
   component: Login,
 });
 
 function Login() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
+  const locale = useLocale();
+  const lp = localeParam(locale);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/gerar" });
+      if (data.session) navigate({ to: "/{-$locale}/gerar", params: { locale: lp } });
     });
-  }, [navigate]);
+  }, [navigate, lp]);
 
   async function entrar() {
     setLoading(true);
     try {
+      const localePath = locale === DEFAULT_LOCALE ? "" : `/${locale}`;
       const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin + "/gerar",
+        redirect_uri: window.location.origin + `${localePath}/gerar`,
       });
       if (result.error) {
-        toast.error("Não foi possível entrar. Tente novamente.");
+        toast.error(t("login.error_generic"));
         setLoading(false);
         return;
       }
       if (result.redirected) return;
-      navigate({ to: "/gerar" });
+      navigate({ to: "/{-$locale}/gerar", params: { locale: lp } });
     } catch {
-      toast.error("Erro inesperado.");
+      toast.error(t("login.error_unexpected"));
       setLoading(false);
     }
   }
@@ -52,10 +61,8 @@ function Login() {
       <Toaster richColors position="top-center" />
       <main className="mx-auto flex max-w-md flex-col items-center px-6 py-20">
         <div className="w-full rounded-3xl bg-card p-8 shadow-sm md:p-10 text-center">
-          <h1 className="font-display text-3xl">Entrar na Forja</h1>
-          <p className="mt-3 text-muted-foreground">
-            Entre com sua conta Google para gerar seu plano de treino personalizado.
-          </p>
+          <h1 className="font-display text-3xl">{t("login.h1")}</h1>
+          <p className="mt-3 text-muted-foreground">{t("login.lede")}</p>
           <button
             onClick={entrar}
             disabled={loading}
@@ -71,7 +78,7 @@ function Login() {
                 <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
               </svg>
             )}
-            Continuar com Google
+            {t("login.button")}
           </button>
         </div>
       </main>

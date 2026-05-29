@@ -9,85 +9,98 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as GerarRouteImport } from './routes/gerar'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as Char123LocaleChar125IndexRouteImport } from './routes/{-$locale}/index'
+import { Route as Char123LocaleChar125SobreRouteImport } from './routes/{-$locale}/sobre'
+import { Route as Char123LocaleChar125LoginRouteImport } from './routes/{-$locale}/login'
+import { Route as Char123LocaleChar125GerarRouteImport } from './routes/{-$locale}/gerar'
 
-const SobreRoute = SobreRouteImport.update({
-  id: '/sobre',
-  path: '/sobre',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GerarRoute = GerarRouteImport.update({
-  id: '/gerar',
-  path: '/gerar',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const Char123LocaleChar125IndexRoute =
+  Char123LocaleChar125IndexRouteImport.update({
+    id: '/{-$locale}/',
+    path: '/{-$locale}/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char123LocaleChar125SobreRoute =
+  Char123LocaleChar125SobreRouteImport.update({
+    id: '/{-$locale}/sobre',
+    path: '/{-$locale}/sobre',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char123LocaleChar125LoginRoute =
+  Char123LocaleChar125LoginRouteImport.update({
+    id: '/{-$locale}/login',
+    path: '/{-$locale}/login',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char123LocaleChar125GerarRoute =
+  Char123LocaleChar125GerarRouteImport.update({
+    id: '/{-$locale}/gerar',
+    path: '/{-$locale}/gerar',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/gerar': typeof GerarRoute
-  '/login': typeof LoginRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/sobre': typeof SobreRoute
+  '/{-$locale}/gerar': typeof Char123LocaleChar125GerarRoute
+  '/{-$locale}/login': typeof Char123LocaleChar125LoginRoute
+  '/{-$locale}/sobre': typeof Char123LocaleChar125SobreRoute
+  '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/gerar': typeof GerarRoute
-  '/login': typeof LoginRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/sobre': typeof SobreRoute
+  '/{-$locale}/gerar': typeof Char123LocaleChar125GerarRoute
+  '/{-$locale}/login': typeof Char123LocaleChar125LoginRoute
+  '/{-$locale}/sobre': typeof Char123LocaleChar125SobreRoute
+  '/{-$locale}': typeof Char123LocaleChar125IndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/gerar': typeof GerarRoute
-  '/login': typeof LoginRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/sobre': typeof SobreRoute
+  '/{-$locale}/gerar': typeof Char123LocaleChar125GerarRoute
+  '/{-$locale}/login': typeof Char123LocaleChar125LoginRoute
+  '/{-$locale}/sobre': typeof Char123LocaleChar125SobreRoute
+  '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/gerar' | '/login' | '/sitemap.xml' | '/sobre'
+  fullPaths:
+    | '/sitemap.xml'
+    | '/{-$locale}/gerar'
+    | '/{-$locale}/login'
+    | '/{-$locale}/sobre'
+    | '/{-$locale}/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/gerar' | '/login' | '/sitemap.xml' | '/sobre'
-  id: '__root__' | '/' | '/gerar' | '/login' | '/sitemap.xml' | '/sobre'
+  to:
+    | '/sitemap.xml'
+    | '/{-$locale}/gerar'
+    | '/{-$locale}/login'
+    | '/{-$locale}/sobre'
+    | '/{-$locale}'
+  id:
+    | '__root__'
+    | '/sitemap.xml'
+    | '/{-$locale}/gerar'
+    | '/{-$locale}/login'
+    | '/{-$locale}/sobre'
+    | '/{-$locale}/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  GerarRoute: typeof GerarRoute
-  LoginRoute: typeof LoginRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  SobreRoute: typeof SobreRoute
+  Char123LocaleChar125GerarRoute: typeof Char123LocaleChar125GerarRoute
+  Char123LocaleChar125LoginRoute: typeof Char123LocaleChar125LoginRoute
+  Char123LocaleChar125SobreRoute: typeof Char123LocaleChar125SobreRoute
+  Char123LocaleChar125IndexRoute: typeof Char123LocaleChar125IndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sobre': {
-      id: '/sobre'
-      path: '/sobre'
-      fullPath: '/sobre'
-      preLoaderRoute: typeof SobreRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -95,36 +108,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/{-$locale}/': {
+      id: '/{-$locale}/'
+      path: '/{-$locale}'
+      fullPath: '/{-$locale}/'
+      preLoaderRoute: typeof Char123LocaleChar125IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/gerar': {
-      id: '/gerar'
-      path: '/gerar'
-      fullPath: '/gerar'
-      preLoaderRoute: typeof GerarRouteImport
+    '/{-$locale}/sobre': {
+      id: '/{-$locale}/sobre'
+      path: '/{-$locale}/sobre'
+      fullPath: '/{-$locale}/sobre'
+      preLoaderRoute: typeof Char123LocaleChar125SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/{-$locale}/login': {
+      id: '/{-$locale}/login'
+      path: '/{-$locale}/login'
+      fullPath: '/{-$locale}/login'
+      preLoaderRoute: typeof Char123LocaleChar125LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/{-$locale}/gerar': {
+      id: '/{-$locale}/gerar'
+      path: '/{-$locale}/gerar'
+      fullPath: '/{-$locale}/gerar'
+      preLoaderRoute: typeof Char123LocaleChar125GerarRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  GerarRoute: GerarRoute,
-  LoginRoute: LoginRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  SobreRoute: SobreRoute,
+  Char123LocaleChar125GerarRoute: Char123LocaleChar125GerarRoute,
+  Char123LocaleChar125LoginRoute: Char123LocaleChar125LoginRoute,
+  Char123LocaleChar125SobreRoute: Char123LocaleChar125SobreRoute,
+  Char123LocaleChar125IndexRoute: Char123LocaleChar125IndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

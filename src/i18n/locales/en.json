@@ -1,0 +1,129 @@
+{
+  "nav": {
+    "home": "Home",
+    "generate": "Build workout",
+    "about": "About",
+    "start": "Get started"
+  },
+  "switcher": {
+    "label": "Language"
+  },
+  "footer": {
+    "rights": "AI-powered workouts"
+  },
+  "home": {
+    "badge": "Powered by AI",
+    "h1_part1": "Your workout,",
+    "h1_highlight": "forged",
+    "h1_part2": "for you.",
+    "lede": "Tell us your goal, level and available time. In seconds, AI builds a full plan with sets, reps and rest.",
+    "cta_primary": "Build my workout",
+    "cta_secondary": "How it works",
+    "features": {
+      "personalized_title": "Personalized",
+      "personalized_desc": "Tailored to your level, goal and available equipment.",
+      "fast_title": "Fast",
+      "fast_desc": "Ready in seconds — stop improvising at the gym.",
+      "structured_title": "Structured",
+      "structured_desc": "Sets, reps, rest, warm-up and stretching."
+    },
+    "cta_strip_title": "Ready to forge your workout?",
+    "cta_strip_lede": "Takes less than a minute. No signup needed.",
+    "cta_strip_button": "Start now"
+  },
+  "sobre": {
+    "h1": "About Forja",
+    "intro": "Forja is a workout builder that uses artificial intelligence to create personalized plans in seconds. You answer a few questions about your profile, goal and available time — and get a structured workout with sets, reps, rest, warm-up and stretching.",
+    "how_h2": "How it works",
+    "step1": "Tell us your profile: age, sex, level and goal.",
+    "step2": "Say where you train, how many days per week and how long per session.",
+    "step3": "AI builds your plan — print it, copy it or start over.",
+    "warn_h2": "Important notice",
+    "warn": "Forja generates workout suggestions. Before starting any exercise program, consult a health professional, especially if you have injuries or medical conditions."
+  },
+  "login": {
+    "h1": "Sign in to Forja",
+    "lede": "Sign in with your Google account to generate your personalized workout plan.",
+    "button": "Continue with Google",
+    "error_generic": "Couldn't sign you in. Please try again.",
+    "error_unexpected": "Unexpected error."
+  },
+  "gerar": {
+    "title": "Let's build your workout",
+    "step_of": "Step {{current}} of {{total}}",
+    "step0_title": "About you",
+    "step1_title": "Your goal",
+    "step2_title": "Available time",
+    "step3_title": "Final details",
+    "f_sex": "Sex",
+    "f_age": "Age",
+    "f_age_placeholder": "e.g., 28",
+    "f_level": "Level",
+    "f_goal": "What do you want to achieve?",
+    "f_place": "Where will you train?",
+    "f_days": "Days per week",
+    "f_minutes": "Minutes per session",
+    "f_focus": "Preferred muscle groups (optional)",
+    "f_restrictions": "Restrictions or injuries (optional)",
+    "f_restrictions_placeholder": "e.g., lower back pain, avoid back squats...",
+    "sex": { "masculino": "Male", "feminino": "Female", "outro": "Prefer not to say" },
+    "level": {
+      "iniciante": "Beginner", "iniciante_desc": "Little or no experience",
+      "intermediario": "Intermediate", "intermediario_desc": "Training for a few months",
+      "avancado": "Advanced", "avancado_desc": "Training for over a year"
+    },
+    "goal": {
+      "hipertrofia": "Hypertrophy",
+      "emagrecimento": "Fat loss",
+      "condicionamento": "Conditioning",
+      "forca": "Strength",
+      "mobilidade": "Mobility"
+    },
+    "place": {
+      "academia": "Full gym",
+      "casa-equip": "Home with equipment",
+      "casa-livre": "Home without equipment",
+      "ar-livre": "Outdoors"
+    },
+    "focus": {
+      "Peito": "Chest", "Costas": "Back", "Pernas": "Legs",
+      "Glúteos": "Glutes", "Braços": "Arms", "Core": "Core", "Cardio": "Cardio"
+    },
+    "minutes_unit": "{{n}} min",
+    "back": "Back",
+    "next": "Next",
+    "generate": "Generate workout",
+    "generating": "Generating your workout...",
+    "err_rate": "Too many requests. Please try again shortly.",
+    "err_credits": "AI credits exhausted. Please add credits in the workspace.",
+    "err_generic": "Couldn't generate the workout. Please try again.",
+    "err_unexpected": "Unexpected error. Please try again.",
+    "err_response": "Unexpected AI response.",
+    "copied": "Workout copied!",
+    "restart": "Start over",
+    "copy": "Copy",
+    "print": "Print / PDF",
+    "day_label": "Day {{letter}}",
+    "days_per_week": "{{n}} days/week",
+    "min_per_session": "{{n}} min/session",
+    "warmup": "Warm-up",
+    "stretch": "Stretching",
+    "tips": "Tips"
+  },
+  "meta": {
+    "home_title": "Forja — Your workout, built by AI",
+    "home_desc": "Build a personalized workout in seconds based on your profile, goal and available time.",
+    "home_og_title": "Forja — Your workout, built by AI",
+    "home_og_desc": "Personalized AI workouts, ready in seconds.",
+    "sobre_title": "About Forja — AI-personalized workouts",
+    "sobre_desc": "Meet Forja: how we use AI to build personalized workout plans in seconds.",
+    "sobre_og_desc": "How Forja builds your workout with AI — methodology, steps and safety tips.",
+    "gerar_title": "Build workout — Forja",
+    "gerar_desc": "Answer a few questions and get a personalized AI workout.",
+    "gerar_og_desc": "Create your personalized workout plan with our AI in seconds — sets, reps, rest and tips.",
+    "login_title": "Sign in to Forja — Access your workout generator",
+    "login_desc": "Sign in with Google to access Forja's AI-powered workout generator.",
+    "root_title": "Forja — AI-personalized workouts",
+    "root_desc": "Build a personalized workout plan in seconds with artificial intelligence."
+  }
+}

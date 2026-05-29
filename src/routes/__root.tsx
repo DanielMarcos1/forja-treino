@@ -4,11 +4,17 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
+  useNavigate,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
+import "@/i18n";
+import { DEFAULT_LOCALE, detectBrowserLocale, isLocale } from "@/i18n";
+import { LOCALE_KEY } from "@/components/LanguageSwitcher";
 
 function NotFoundComponent() {
   return (
@@ -130,8 +136,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const m = pathname.match(/^\/(en|es|fr)(\/|$)/);
+  const htmlLang = m ? m[1] : DEFAULT_LOCALE;
   return (
-    <html lang="en">
+    <html lang={htmlLang}>
       <head>
         <HeadContent />
       </head>
@@ -145,6 +154,25 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const navigate = useNavigate();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  // First-visit browser-language detection: only redirect from the root URL,
+  // only if user hasn't picked a language before.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let stored: string | null = null;
+    try { stored = localStorage.getItem(LOCALE_KEY); } catch { /* ignore */ }
+    if (stored) return;
+    // Only auto-redirect from the bare PT root, not from already-prefixed paths.
+    if (pathname !== "/") return;
+    const detected = detectBrowserLocale();
+    if (detected !== DEFAULT_LOCALE && isLocale(detected)) {
+      try { localStorage.setItem(LOCALE_KEY, detected); } catch { /* ignore */ }
+      navigate({ to: `/${detected}`, replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
