@@ -80,7 +80,7 @@ export function LanguageSwitcher() {
         onClick={() => setOpen((v) => !v)}
         className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-background/60 px-3 py-2 text-sm font-semibold text-foreground/80 transition hover:border-primary/40 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        <span aria-hidden className="text-base leading-none">{cur.flag}</span>
+        <Flag country={cur.country} />
         <span className="tracking-wide">{cur.code}</span>
         <svg
           className={`h-3 w-3 text-foreground/60 transition-transform ${open ? "rotate-180" : ""}`}
@@ -114,7 +114,7 @@ export function LanguageSwitcher() {
                       : "text-foreground/80 hover:bg-muted hover:text-foreground"
                   }`}
                 >
-                  <span aria-hidden className="text-base leading-none">{item.flag}</span>
+                  <Flag country={item.country} />
                   <span className="flex-1 text-left">{item.name}</span>
                   <span className="text-xs font-semibold tracking-wide text-foreground/50">{item.code}</span>
                 </button>
