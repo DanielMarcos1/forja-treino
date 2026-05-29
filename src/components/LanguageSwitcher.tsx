@@ -1,18 +1,18 @@
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
+import { useEffect, useRef, useState } from "react";
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE, type Locale, isLocale } from "@/i18n";
 import { useLocale } from "@/i18n/useLocale";
 
-const LABELS: Record<Locale, string> = {
-  pt: "🇧🇷 PT",
-  en: "🇺🇸 EN",
-  es: "🇪🇸 ES",
-  fr: "🇫🇷 FR",
+const LABELS: Record<Locale, { flag: string; code: string; name: string }> = {
+  pt: { flag: "🇧🇷", code: "PT", name: "Português" },
+  en: { flag: "🇺🇸", code: "EN", name: "English" },
+  es: { flag: "🇪🇸", code: "ES", name: "Español" },
+  fr: { flag: "🇫🇷", code: "FR", name: "Français" },
 };
 
 const LOCALE_KEY = "forja.locale";
 
-/** Strip any leading /en, /es, /fr from a pathname; PT is at root. */
 function stripLocale(pathname: string): string {
   const m = pathname.match(/^\/(en|es|fr)(\/.*)?$/);
   if (!m) return pathname || "/";
@@ -24,6 +24,23 @@ export function LanguageSwitcher() {
   const current = useLocale();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function onDocClick(e: MouseEvent) {
+      if (!ref.current?.contains(e.target as Node)) setOpen(false);
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, []);
 
   function onChange(next: Locale) {
     try {
@@ -31,33 +48,69 @@ export function LanguageSwitcher() {
     } catch {
       // ignore
     }
+    setOpen(false);
+    if (!isLocale(next)) return;
     const base = stripLocale(pathname);
     const target = next === DEFAULT_LOCALE ? base : `/${next}${base === "/" ? "" : base}`;
     navigate({ to: target });
   }
 
+  const cur = LABELS[current];
+
   return (
-    <label className="relative inline-flex items-center">
-      <span className="sr-only">{t("switcher.label")}</span>
-      <select
+    <div ref={ref} className="relative">
+      <button
+        type="button"
         aria-label={t("switcher.label")}
-        value={current}
-        onChange={(e) => {
-          const v = e.target.value;
-          if (isLocale(v)) onChange(v);
-        }}
-        className="cursor-pointer appearance-none rounded-full border border-border bg-background px-3 py-1.5 pr-7 text-xs font-semibold text-foreground/80 transition hover:border-foreground/40 focus:outline-none focus:ring-2 focus:ring-ring"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-background/60 px-3 py-2 text-sm font-semibold text-foreground/80 transition hover:border-primary/40 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        {SUPPORTED_LOCALES.map((l) => (
-          <option key={l} value={l}>
-            {LABELS[l]}
-          </option>
-        ))}
-      </select>
-      <svg className="pointer-events-none absolute right-2 h-3 w-3 text-foreground/60" viewBox="0 0 12 12" fill="none">
-        <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </label>
+        <span aria-hidden className="text-base leading-none">{cur.flag}</span>
+        <span className="tracking-wide">{cur.code}</span>
+        <svg
+          className={`h-3 w-3 text-foreground/60 transition-transform ${open ? "rotate-180" : ""}`}
+          viewBox="0 0 12 12"
+          fill="none"
+          aria-hidden
+        >
+          <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
+      {open && (
+        <ul
+          role="listbox"
+          aria-label={t("switcher.label")}
+          className="absolute right-0 z-50 mt-2 min-w-[10rem] overflow-hidden rounded-2xl border border-border/70 bg-background/95 p-1 shadow-lg backdrop-blur"
+        >
+          {SUPPORTED_LOCALES.map((l) => {
+            const item = LABELS[l];
+            const active = l === current;
+            return (
+              <li key={l}>
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={active}
+                  onClick={() => onChange(l)}
+                  className={`flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium transition ${
+                    active
+                      ? "bg-primary/10 text-primary"
+                      : "text-foreground/80 hover:bg-muted hover:text-foreground"
+                  }`}
+                >
+                  <span aria-hidden className="text-base leading-none">{item.flag}</span>
+                  <span className="flex-1 text-left">{item.name}</span>
+                  <span className="text-xs font-semibold tracking-wide text-foreground/50">{item.code}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
   );
 }
 
