@@ -17,7 +17,9 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="min-h-screen">
+    <div className="min-h-screen">
       <SiteHeader />
+      <main>
 
       {/* HERO */}
       <section className="relative overflow-hidden">
@@ -78,7 +80,7 @@ function Index() {
               <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/15 text-primary">
                 <f.icon className="h-5 w-5" />
               </div>
-              <h3 className="mt-4 text-xl">{f.title}</h3>
+              <h2 className="mt-4 text-xl">{f.title}</h2>
               <p className="mt-2 text-muted-foreground">{f.desc}</p>
             </div>
           ))}
@@ -101,6 +103,7 @@ function Index() {
           </Link>
         </div>
       </section>
+      </main>
 
       <SiteFooter />
     </div>

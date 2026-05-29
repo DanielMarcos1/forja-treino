@@ -90,6 +90,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              name: "Forja",
+              url: "https://forja-treino.lovable.app",
+              logo: "https://forja-treino.lovable.app/favicon.ico",
+            },
+            {
+              "@type": "WebSite",
+              name: "Forja",
+              url: "https://forja-treino.lovable.app",
+              description: "Treinos personalizados gerados por inteligência artificial.",
+            },
+            {
+              "@type": "WebApplication",
+              name: "Forja",
+              url: "https://forja-treino.lovable.app",
+              description: "AI-powered workout generator that builds personalized training plans in seconds.",
+              applicationCategory: "Fitness",
+              operatingSystem: "Web",
+              offers: { "@type": "Offer", price: "0", priceCurrency: "BRL" },
+            },
+          ],
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,

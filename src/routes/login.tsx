@@ -10,8 +10,8 @@ import { Loader2 } from "lucide-react";
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Entrar — Forja" },
-      { name: "description", content: "Entre com sua conta Google para gerar seu treino." },
+      { title: "Entrar na Forja — Acesse seu gerador de treinos" },
+      { name: "description", content: "Entre com sua conta Google para acessar o gerador de treinos personalizados por IA da Forja." },
     ],
   }),
   component: Login,

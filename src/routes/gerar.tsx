@@ -12,7 +12,7 @@ export const Route = createFileRoute("/gerar")({
       { title: "Montar treino — Forja" },
       { name: "description", content: "Responda algumas perguntas e receba um treino personalizado por IA." },
       { property: "og:title", content: "Montar treino — Forja" },
-      { property: "og:description", content: "Treino personalizado em segundos." },
+      { property: "og:description", content: "Crie seu plano de treino personalizado com nossa inteligência artificial em segundos — séries, repetições, descanso e dicas." },
     ],
   }),
   component: Gerar,
@@ -198,8 +198,9 @@ function Gerar() {
                       options={SEXOS.map((s) => ({ value: s.v, label: s.l }))}
                     />
                   </Field>
-                  <Field label="Idade">
+                  <Field label="Idade" htmlFor="idade">
                     <input
+                      id="idade"
                       type="number"
                       inputMode="numeric"
                       min={10}
@@ -291,8 +292,9 @@ function Gerar() {
                       })}
                     </div>
                   </Field>
-                  <Field label="Restrições ou lesões (opcional)">
+                  <Field label="Restrições ou lesões (opcional)" htmlFor="restricoes">
                     <textarea
+                      id="restricoes"
                       value={form.restricoes}
                       onChange={(e) => update("restricoes", e.target.value)}
                       placeholder="Ex.: dor lombar, evitar agachamento livre..."
@@ -359,10 +361,10 @@ function Step({ title, children }: { title: string; children: React.ReactNode })
   );
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({ label, htmlFor, children }: { label: string; htmlFor?: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="mb-3 block text-sm font-semibold text-foreground/80">{label}</label>
+      <label htmlFor={htmlFor} className="mb-3 block text-sm font-semibold text-foreground/80">{label}</label>
       {children}
     </div>
   );
