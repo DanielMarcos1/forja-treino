@@ -4,12 +4,25 @@ import { useEffect, useRef, useState } from "react";
 import { SUPPORTED_LOCALES, DEFAULT_LOCALE, type Locale, isLocale } from "@/i18n";
 import { useLocale } from "@/i18n/useLocale";
 
-const LABELS: Record<Locale, { flag: string; code: string; name: string }> = {
-  pt: { flag: "🇧🇷", code: "PT", name: "Português" },
-  en: { flag: "🇺🇸", code: "EN", name: "English" },
-  es: { flag: "🇪🇸", code: "ES", name: "Español" },
-  fr: { flag: "🇫🇷", code: "FR", name: "Français" },
+const LABELS: Record<Locale, { country: string; code: string; name: string }> = {
+  pt: { country: "br", code: "PT", name: "Português" },
+  en: { country: "us", code: "EN", name: "English" },
+  es: { country: "es", code: "ES", name: "Español" },
+  fr: { country: "fr", code: "FR", name: "Français" },
 };
+
+function Flag({ country, className = "" }: { country: string; className?: string }) {
+  return (
+    <img
+      src={`https://flagcdn.com/w40/${country}.png`}
+      srcSet={`https://flagcdn.com/w80/${country}.png 2x`}
+      alt=""
+      aria-hidden
+      className={`inline-block h-4 w-6 rounded-[3px] object-cover shadow-[0_0_0_1px_rgba(0,0,0,0.08)] ${className}`}
+      loading="lazy"
+    />
+  );
+}
 
 const LOCALE_KEY = "forja.locale";
 
@@ -67,7 +80,7 @@ export function LanguageSwitcher() {
         onClick={() => setOpen((v) => !v)}
         className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-background/60 px-3 py-2 text-sm font-semibold text-foreground/80 transition hover:border-primary/40 hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        <span aria-hidden className="text-base leading-none">{cur.flag}</span>
+        <Flag country={cur.country} />
         <span className="tracking-wide">{cur.code}</span>
         <svg
           className={`h-3 w-3 text-foreground/60 transition-transform ${open ? "rotate-180" : ""}`}
@@ -101,7 +114,7 @@ export function LanguageSwitcher() {
                       : "text-foreground/80 hover:bg-muted hover:text-foreground"
                   }`}
                 >
-                  <span aria-hidden className="text-base leading-none">{item.flag}</span>
+                  <Flag country={item.country} />
                   <span className="flex-1 text-left">{item.name}</span>
                   <span className="text-xs font-semibold tracking-wide text-foreground/50">{item.code}</span>
                 </button>
