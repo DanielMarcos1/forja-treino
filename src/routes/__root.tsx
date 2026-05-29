@@ -83,7 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:description", content: "Monte um plano de treino personalizado em segundos com inteligência artificial." },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/eb9521e2-47db-4e0c-b43c-83913b265246" },
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/eb9521e2-47db-4e0c-b43c-83913b265246" },
-      { name: "google-site-verification", content: "jiU4RxIxQafAw7odWNx5L_RUw2SAQ5zTpg6zCFxRM2w" },
+      { name: "google-site-verification", content: "FACHO_r2CAph0Z6FwhN3Izhhe_1mdVWKzS4nHOzssmk" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -100,19 +100,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             {
               "@type": "Organization",
               name: "Forja",
-              url: "https://forja-treino.lovable.app",
-              logo: "https://forja-treino.lovable.app/favicon.ico",
+              url: "https://forjatreino.com",
+              logo: "https://forjatreino.com/favicon.ico",
             },
             {
               "@type": "WebSite",
               name: "Forja",
-              url: "https://forja-treino.lovable.app",
+              url: "https://forjatreino.com",
               description: "Treinos personalizados gerados por inteligência artificial.",
             },
             {
               "@type": "WebApplication",
               name: "Forja",
-              url: "https://forja-treino.lovable.app",
+              url: "https://forjatreino.com",
               description: "AI-powered workout generator that builds personalized training plans in seconds.",
               applicationCategory: "Fitness",
               operatingSystem: "Web",
