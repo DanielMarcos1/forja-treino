@@ -248,7 +248,15 @@ Gere exatamente ${input.dias} dias de treino.`;
       });
     }
     const treino = JSON.parse(call.function.arguments);
-    return new Response(JSON.stringify({ treino }), {
+
+    // Record this generation toward the monthly quota
+    const { error: insErr } = await supabaseClient
+      .from("workout_generations")
+      .insert({ user_id: userId });
+    if (insErr) console.error("quota insert error:", insErr);
+
+    const remaining = Math.max(0, MONTHLY_LIMIT - ((usedCount ?? 0) + 1));
+    return new Response(JSON.stringify({ treino, quota: { used: (usedCount ?? 0) + 1, limit: MONTHLY_LIMIT, remaining } }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
