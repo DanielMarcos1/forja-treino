@@ -66,11 +66,18 @@
     "f_focus": "Grupos preferidos (opcional)",
     "f_restrictions": "Restrições ou lesões (opcional)",
     "f_restrictions_placeholder": "Ex.: dor lombar, evitar agachamento livre...",
-    "sex": { "masculino": "Masculino", "feminino": "Feminino", "outro": "Prefiro não dizer" },
+    "sex": {
+      "masculino": "Masculino",
+      "feminino": "Feminino",
+      "outro": "Prefiro não dizer"
+    },
     "level": {
-      "iniciante": "Iniciante", "iniciante_desc": "Pouca ou nenhuma experiência",
-      "intermediario": "Intermediário", "intermediario_desc": "Treina há alguns meses",
-      "avancado": "Avançado", "avancado_desc": "Treina há mais de 1 ano"
+      "iniciante": "Iniciante",
+      "iniciante_desc": "Pouca ou nenhuma experiência",
+      "intermediario": "Intermediário",
+      "intermediario_desc": "Treina há alguns meses",
+      "avancado": "Avançado",
+      "avancado_desc": "Treina há mais de 1 ano"
     },
     "goal": {
       "hipertrofia": "Hipertrofia",
@@ -86,8 +93,13 @@
       "ar-livre": "Ar livre"
     },
     "focus": {
-      "Peito": "Peito", "Costas": "Costas", "Pernas": "Pernas",
-      "Glúteos": "Glúteos", "Braços": "Braços", "Core": "Core", "Cardio": "Cardio"
+      "Peito": "Peito",
+      "Costas": "Costas",
+      "Pernas": "Pernas",
+      "Glúteos": "Glúteos",
+      "Braços": "Braços",
+      "Core": "Core",
+      "Cardio": "Cardio"
     },
     "minutes_unit": "{{n}} min",
     "back": "Voltar",
@@ -108,7 +120,8 @@
     "min_per_session": "{{n}} min/sessão",
     "warmup": "Aquecimento",
     "stretch": "Alongamento",
-    "tips": "Dicas"
+    "tips": "Dicas",
+    "err_quota": "Você atingiu o limite de 3 treinos este mês. Tente novamente no próximo mês."
   },
   "meta": {
     "home_title": "Forja — Seu treino, montado por IA",

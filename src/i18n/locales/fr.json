@@ -66,11 +66,18 @@
     "f_focus": "Groupes préférés (optionnel)",
     "f_restrictions": "Restrictions ou blessures (optionnel)",
     "f_restrictions_placeholder": "Ex. : douleur lombaire, éviter le squat libre...",
-    "sex": { "masculino": "Homme", "feminino": "Femme", "outro": "Préfère ne pas dire" },
+    "sex": {
+      "masculino": "Homme",
+      "feminino": "Femme",
+      "outro": "Préfère ne pas dire"
+    },
     "level": {
-      "iniciante": "Débutant", "iniciante_desc": "Peu ou pas d'expérience",
-      "intermediario": "Intermédiaire", "intermediario_desc": "S'entraîne depuis quelques mois",
-      "avancado": "Avancé", "avancado_desc": "S'entraîne depuis plus d'un an"
+      "iniciante": "Débutant",
+      "iniciante_desc": "Peu ou pas d'expérience",
+      "intermediario": "Intermédiaire",
+      "intermediario_desc": "S'entraîne depuis quelques mois",
+      "avancado": "Avancé",
+      "avancado_desc": "S'entraîne depuis plus d'un an"
     },
     "goal": {
       "hipertrofia": "Hypertrophie",
@@ -86,8 +93,13 @@
       "ar-livre": "Plein air"
     },
     "focus": {
-      "Peito": "Pectoraux", "Costas": "Dos", "Pernas": "Jambes",
-      "Glúteos": "Fessiers", "Braços": "Bras", "Core": "Gainage", "Cardio": "Cardio"
+      "Peito": "Pectoraux",
+      "Costas": "Dos",
+      "Pernas": "Jambes",
+      "Glúteos": "Fessiers",
+      "Braços": "Bras",
+      "Core": "Gainage",
+      "Cardio": "Cardio"
     },
     "minutes_unit": "{{n}} min",
     "back": "Retour",
@@ -108,7 +120,8 @@
     "min_per_session": "{{n}} min/séance",
     "warmup": "Échauffement",
     "stretch": "Étirements",
-    "tips": "Conseils"
+    "tips": "Conseils",
+    "err_quota": "Vous avez atteint la limite de 3 entraînements ce mois-ci. Réessayez le mois prochain."
   },
   "meta": {
     "home_title": "Forja — Votre entraînement, créé par l'IA",
