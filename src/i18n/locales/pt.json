@@ -2,8 +2,29 @@
   "nav": {
     "home": "Início",
     "generate": "Montar treino",
+    "my_workouts": "Meus treinos",
     "about": "Sobre",
     "start": "Começar"
+  },
+  "meus": {
+    "title": "Meus treinos",
+    "subtitle": "Todos os planos que você gerou ficam salvos aqui.",
+    "new": "Novo treino",
+    "open": "Abrir",
+    "rename": "Renomear",
+    "delete": "Excluir",
+    "delete_confirm": "Excluir este treino? Esta ação não pode ser desfeita.",
+    "deleted": "Treino excluído.",
+    "renamed": "Treino renomeado.",
+    "saved_at": "Salvo em {{date}}",
+    "back_to_list": "Voltar para meus treinos",
+    "empty_title": "Você ainda não tem treinos salvos",
+    "empty_desc": "Gere seu primeiro plano e ele aparecerá aqui automaticamente.",
+    "empty_cta": "Gerar meu primeiro treino",
+    "not_found": "Treino não encontrado.",
+    "err_load": "Não foi possível carregar seus treinos.",
+    "err_delete": "Não foi possível excluir.",
+    "err_rename": "Não foi possível renomear."
   },
   "switcher": {
     "label": "Idioma"
@@ -121,9 +142,13 @@
     "warmup": "Aquecimento",
     "stretch": "Alongamento",
     "tips": "Dicas",
-    "err_quota": "Você atingiu o limite de 3 treinos este mês. Tente novamente no próximo mês."
+    "err_quota": "Você atingiu o limite de 3 treinos este mês. Tente novamente no próximo mês.",
+    "saved_auto": "Treino salvo automaticamente em Meus treinos",
+    "see_demo": "Ver demonstração"
   },
   "meta": {
+    "meus_title": "Meus treinos — Forja",
+    "meus_desc": "Acesse todos os planos de treino que você gerou na Forja.",
     "home_title": "Forja — Seu treino, montado por IA",
     "home_desc": "Monte um treino personalizado em segundos com base no seu perfil, objetivo e tempo disponível.",
     "home_og_title": "Forja — Seu treino, montado por IA",

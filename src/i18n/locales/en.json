@@ -2,8 +2,29 @@
   "nav": {
     "home": "Home",
     "generate": "Build workout",
+    "my_workouts": "My workouts",
     "about": "About",
     "start": "Get started"
+  },
+  "meus": {
+    "title": "My workouts",
+    "subtitle": "Every plan you generate is saved here.",
+    "new": "New workout",
+    "open": "Open",
+    "rename": "Rename",
+    "delete": "Delete",
+    "delete_confirm": "Delete this workout? This cannot be undone.",
+    "deleted": "Workout deleted.",
+    "renamed": "Workout renamed.",
+    "saved_at": "Saved on {{date}}",
+    "back_to_list": "Back to my workouts",
+    "empty_title": "You don't have any saved workouts yet",
+    "empty_desc": "Generate your first plan and it will appear here automatically.",
+    "empty_cta": "Generate my first workout",
+    "not_found": "Workout not found.",
+    "err_load": "Couldn't load your workouts.",
+    "err_delete": "Couldn't delete.",
+    "err_rename": "Couldn't rename."
   },
   "switcher": {
     "label": "Language"
@@ -121,9 +142,13 @@
     "warmup": "Warm-up",
     "stretch": "Stretching",
     "tips": "Tips",
-    "err_quota": "You have reached the limit of 3 workouts this month. Try again next month."
+    "err_quota": "You have reached the limit of 3 workouts this month. Try again next month.",
+    "saved_auto": "Workout saved automatically to My workouts",
+    "see_demo": "See demo"
   },
   "meta": {
+    "meus_title": "My workouts — Forja",
+    "meus_desc": "Access every workout plan you've generated on Forja.",
     "home_title": "Forja — Your workout, built by AI",
     "home_desc": "Build a personalized workout in seconds based on your profile, goal and available time.",
     "home_og_title": "Forja — Your workout, built by AI",
