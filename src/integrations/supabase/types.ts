@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      saved_workouts: {
+        Row: {
+          created_at: string
+          dias_por_semana: number
+          duracao_min: number
+          id: string
+          payload: Json
+          summary: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          dias_por_semana?: number
+          duracao_min?: number
+          id?: string
+          payload: Json
+          summary?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          dias_por_semana?: number
+          duracao_min?: number
+          id?: string
+          payload?: Json
+          summary?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       workout_generations: {
         Row: {
           created_at: string
