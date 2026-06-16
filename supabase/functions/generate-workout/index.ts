@@ -255,8 +255,25 @@ Gere exatamente ${input.dias} dias de treino.`;
       .insert({ user_id: userId });
     if (insErr) console.error("quota insert error:", insErr);
 
+    // Auto-save the generated workout so the user can revisit it
+    let savedWorkoutId: string | null = null;
+    const { data: savedRow, error: saveErr } = await supabaseClient
+      .from("saved_workouts")
+      .insert({
+        user_id: userId,
+        title: treino.titulo ?? "Treino",
+        summary: treino.resumo ?? null,
+        dias_por_semana: Number(treino.diasPorSemana) || input.dias,
+        duracao_min: Number(treino.duracaoMin) || input.tempo,
+        payload: treino,
+      })
+      .select("id")
+      .single();
+    if (saveErr) console.error("save workout error:", saveErr);
+    else savedWorkoutId = savedRow?.id ?? null;
+
     const remaining = Math.max(0, MONTHLY_LIMIT - ((usedCount ?? 0) + 1));
-    return new Response(JSON.stringify({ treino, quota: { used: (usedCount ?? 0) + 1, limit: MONTHLY_LIMIT, remaining } }), {
+    return new Response(JSON.stringify({ treino, savedWorkoutId, quota: { used: (usedCount ?? 0) + 1, limit: MONTHLY_LIMIT, remaining } }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
