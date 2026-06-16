@@ -2,8 +2,29 @@
   "nav": {
     "home": "Accueil",
     "generate": "Créer un entraînement",
+    "my_workouts": "Mes entraînements",
     "about": "À propos",
     "start": "Commencer"
+  },
+  "meus": {
+    "title": "Mes entraînements",
+    "subtitle": "Tous les plans que vous générez sont enregistrés ici.",
+    "new": "Nouvel entraînement",
+    "open": "Ouvrir",
+    "rename": "Renommer",
+    "delete": "Supprimer",
+    "delete_confirm": "Supprimer cet entraînement ? Cette action est irréversible.",
+    "deleted": "Entraînement supprimé.",
+    "renamed": "Entraînement renommé.",
+    "saved_at": "Enregistré le {{date}}",
+    "back_to_list": "Retour à mes entraînements",
+    "empty_title": "Vous n'avez encore aucun entraînement enregistré",
+    "empty_desc": "Générez votre premier plan et il apparaîtra ici automatiquement.",
+    "empty_cta": "Générer mon premier entraînement",
+    "not_found": "Entraînement introuvable.",
+    "err_load": "Impossible de charger vos entraînements.",
+    "err_delete": "Suppression impossible.",
+    "err_rename": "Renommage impossible."
   },
   "switcher": {
     "label": "Langue"
@@ -121,9 +142,13 @@
     "warmup": "Échauffement",
     "stretch": "Étirements",
     "tips": "Conseils",
-    "err_quota": "Vous avez atteint la limite de 3 entraînements ce mois-ci. Réessayez le mois prochain."
+    "err_quota": "Vous avez atteint la limite de 3 entraînements ce mois-ci. Réessayez le mois prochain.",
+    "saved_auto": "Entraînement enregistré automatiquement dans Mes entraînements",
+    "see_demo": "Voir la démo"
   },
   "meta": {
+    "meus_title": "Mes entraînements — Forja",
+    "meus_desc": "Accédez à tous les plans d'entraînement que vous avez générés sur Forja.",
     "home_title": "Forja — Votre entraînement, créé par l'IA",
     "home_desc": "Créez un entraînement personnalisé en quelques secondes selon votre profil, votre objectif et votre temps disponible.",
     "home_og_title": "Forja — Votre entraînement, créé par l'IA",
