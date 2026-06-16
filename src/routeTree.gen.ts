@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as Char123LocaleChar125IndexRouteImport } from './routes/{-$locale}/index'
 import { Route as Char123LocaleChar125SobreRouteImport } from './routes/{-$locale}/sobre'
+import { Route as Char123LocaleChar125MeusTreinosRouteImport } from './routes/{-$locale}/meus-treinos'
 import { Route as Char123LocaleChar125LoginRouteImport } from './routes/{-$locale}/login'
 import { Route as Char123LocaleChar125GerarRouteImport } from './routes/{-$locale}/gerar'
+import { Route as Char123LocaleChar125MeusTreinosIdRouteImport } from './routes/{-$locale}/meus-treinos.$id'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -32,6 +34,12 @@ const Char123LocaleChar125SobreRoute =
     path: '/{-$locale}/sobre',
     getParentRoute: () => rootRouteImport,
   } as any)
+const Char123LocaleChar125MeusTreinosRoute =
+  Char123LocaleChar125MeusTreinosRouteImport.update({
+    id: '/{-$locale}/meus-treinos',
+    path: '/{-$locale}/meus-treinos',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const Char123LocaleChar125LoginRoute =
   Char123LocaleChar125LoginRouteImport.update({
     id: '/{-$locale}/login',
@@ -44,28 +52,40 @@ const Char123LocaleChar125GerarRoute =
     path: '/{-$locale}/gerar',
     getParentRoute: () => rootRouteImport,
   } as any)
+const Char123LocaleChar125MeusTreinosIdRoute =
+  Char123LocaleChar125MeusTreinosIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => Char123LocaleChar125MeusTreinosRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}/gerar': typeof Char123LocaleChar125GerarRoute
   '/{-$locale}/login': typeof Char123LocaleChar125LoginRoute
+  '/{-$locale}/meus-treinos': typeof Char123LocaleChar125MeusTreinosRouteWithChildren
   '/{-$locale}/sobre': typeof Char123LocaleChar125SobreRoute
   '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/meus-treinos/$id': typeof Char123LocaleChar125MeusTreinosIdRoute
 }
 export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}/gerar': typeof Char123LocaleChar125GerarRoute
   '/{-$locale}/login': typeof Char123LocaleChar125LoginRoute
+  '/{-$locale}/meus-treinos': typeof Char123LocaleChar125MeusTreinosRouteWithChildren
   '/{-$locale}/sobre': typeof Char123LocaleChar125SobreRoute
   '/{-$locale}': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/meus-treinos/$id': typeof Char123LocaleChar125MeusTreinosIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}/gerar': typeof Char123LocaleChar125GerarRoute
   '/{-$locale}/login': typeof Char123LocaleChar125LoginRoute
+  '/{-$locale}/meus-treinos': typeof Char123LocaleChar125MeusTreinosRouteWithChildren
   '/{-$locale}/sobre': typeof Char123LocaleChar125SobreRoute
   '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/meus-treinos/$id': typeof Char123LocaleChar125MeusTreinosIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -73,28 +93,35 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/{-$locale}/gerar'
     | '/{-$locale}/login'
+    | '/{-$locale}/meus-treinos'
     | '/{-$locale}/sobre'
     | '/{-$locale}/'
+    | '/{-$locale}/meus-treinos/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/sitemap.xml'
     | '/{-$locale}/gerar'
     | '/{-$locale}/login'
+    | '/{-$locale}/meus-treinos'
     | '/{-$locale}/sobre'
     | '/{-$locale}'
+    | '/{-$locale}/meus-treinos/$id'
   id:
     | '__root__'
     | '/sitemap.xml'
     | '/{-$locale}/gerar'
     | '/{-$locale}/login'
+    | '/{-$locale}/meus-treinos'
     | '/{-$locale}/sobre'
     | '/{-$locale}/'
+    | '/{-$locale}/meus-treinos/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   Char123LocaleChar125GerarRoute: typeof Char123LocaleChar125GerarRoute
   Char123LocaleChar125LoginRoute: typeof Char123LocaleChar125LoginRoute
+  Char123LocaleChar125MeusTreinosRoute: typeof Char123LocaleChar125MeusTreinosRouteWithChildren
   Char123LocaleChar125SobreRoute: typeof Char123LocaleChar125SobreRoute
   Char123LocaleChar125IndexRoute: typeof Char123LocaleChar125IndexRoute
 }
@@ -122,6 +149,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LocaleChar125SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/{-$locale}/meus-treinos': {
+      id: '/{-$locale}/meus-treinos'
+      path: '/{-$locale}/meus-treinos'
+      fullPath: '/{-$locale}/meus-treinos'
+      preLoaderRoute: typeof Char123LocaleChar125MeusTreinosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/{-$locale}/login': {
       id: '/{-$locale}/login'
       path: '/{-$locale}/login'
@@ -136,26 +170,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LocaleChar125GerarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/{-$locale}/meus-treinos/$id': {
+      id: '/{-$locale}/meus-treinos/$id'
+      path: '/$id'
+      fullPath: '/{-$locale}/meus-treinos/$id'
+      preLoaderRoute: typeof Char123LocaleChar125MeusTreinosIdRouteImport
+      parentRoute: typeof Char123LocaleChar125MeusTreinosRoute
+    }
   }
 }
+
+interface Char123LocaleChar125MeusTreinosRouteChildren {
+  Char123LocaleChar125MeusTreinosIdRoute: typeof Char123LocaleChar125MeusTreinosIdRoute
+}
+
+const Char123LocaleChar125MeusTreinosRouteChildren: Char123LocaleChar125MeusTreinosRouteChildren =
+  {
+    Char123LocaleChar125MeusTreinosIdRoute:
+      Char123LocaleChar125MeusTreinosIdRoute,
+  }
+
+const Char123LocaleChar125MeusTreinosRouteWithChildren =
+  Char123LocaleChar125MeusTreinosRoute._addFileChildren(
+    Char123LocaleChar125MeusTreinosRouteChildren,
+  )
 
 const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   Char123LocaleChar125GerarRoute: Char123LocaleChar125GerarRoute,
   Char123LocaleChar125LoginRoute: Char123LocaleChar125LoginRoute,
+  Char123LocaleChar125MeusTreinosRoute:
+    Char123LocaleChar125MeusTreinosRouteWithChildren,
   Char123LocaleChar125SobreRoute: Char123LocaleChar125SobreRoute,
   Char123LocaleChar125IndexRoute: Char123LocaleChar125IndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

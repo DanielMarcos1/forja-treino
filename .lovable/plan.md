@@ -1,74 +1,92 @@
-# Multi-language support (PT, EN, ES, FR)
+## Goal
+Two improvements based on user feedback:
+1. Let users save generated workouts and revisit them in a personal dashboard.
+2. Help lifters see how each exercise should be performed by linking a demo video.
 
-Add full internationalization to Forja with locale-prefixed URLs, browser-language detection on first visit, a header switcher, and translated metadata across all routes.
+---
 
-## Languages & defaults
-- Supported: `pt` (Portuguese-BR, default), `en`, `es`, `fr`.
-- Default for unmatched browser languages: `pt`.
+## 1. Save workouts + dashboard
 
-## URL strategy
-- Locale lives in a path prefix: `/`, `/en`, `/es`, `/fr` (no `/pt` — PT served at root to keep current URLs intact and preserve SEO).
-- Use TanStack's optional path param `{-$locale}` so a single route file covers both `/about` (pt) and `/en/about` (en).
-- Restructure routes:
+### Database
+New table `saved_workouts`:
+- `user_id` (owner)
+- `title`, `summary`
+- `dias_por_semana`, `duracao_min`
+- `payload` (jsonb) — full `Treino` object as returned by the AI
+- standard `id`, `created_at`, `updated_at`
 
-```text
-src/routes/
-  __root.tsx
-  {-$locale}/
-    index.tsx     -> /, /en, /es, /fr
-    gerar.tsx     -> /gerar, /en/gerar, ...
-    sobre.tsx     -> /sobre, /en/sobre, ...
-    login.tsx     -> /login, /en/login, ...
-```
+RLS: users can view, insert, update, delete only their own rows. GRANTs for `authenticated` + `service_role`.
 
-(File-based, dot-style: `{-$locale}.index.tsx`, `{-$locale}.gerar.tsx`, etc.)
+We keep the existing `workout_generations` table — it tracks the monthly quota and stays untouched.
 
-## Detection on first visit
-- Root component reads `navigator.language` on mount.
-- If user lands on `/` and detected locale ≠ `pt`, redirect once to the prefixed URL (`/en`, `/es`, `/fr`).
-- Persist explicit choice in `localStorage` (`forja.locale`); skip auto-redirect if a stored preference exists.
-- Manual `?lang=` query or switcher click always wins and is persisted.
+### Edge function (`generate-workout`)
+After generating, auto-save the workout to `saved_workouts` (so nothing is lost). Return the new `savedWorkoutId` along with `treino` and `quota`.
 
-## Header switcher
-- Dropdown beside the "Começar" button in `SiteHeader`, showing 🇧🇷 🇺🇸 🇪🇸 🇫🇷.
-- Selecting a language navigates to the same route under the new locale prefix and updates `localStorage`.
+### Frontend
 
-## i18n runtime
-- Add `react-i18next` + `i18next` (lightweight, SSR-friendly, no backend HTTP).
-- Translation files under `src/i18n/locales/{pt,en,es,fr}.json` with namespaces: `common`, `home`, `gerar`, `sobre`, `login`, `meta`.
-- `src/i18n/index.ts` initializes i18next with all 4 bundles inlined (no async load).
-- `LocaleProvider` in `__root.tsx`'s `RootComponent` reads `locale` from route params and calls `i18n.changeLanguage(locale ?? 'pt')` on change.
+**Result view (`/gerar`)** — after a workout is generated:
+- Add a "Saved automatically" indicator with a rename input (updates `title` in `saved_workouts`).
+- Add a "My workouts" link in the header for signed-in users.
 
-## Translated content
-All user-visible strings in:
-- `SiteHeader` / `SiteFooter` (nav labels, CTA)
-- `index.tsx` (hero, features, CTA strip)
-- `gerar.tsx` (form labels, options, buttons, error/loading states)
-- `sobre.tsx`
-- `login.tsx`
-- Toast/error messages
+**New route `/{-$locale}/meus-treinos` (dashboard)**:
+- Grid of cards showing each saved workout: title, summary, days/week, minutes, created date, quick stats.
+- Card actions: Open, Rename, Delete.
+- Empty state with CTA "Generate your first workout".
+- Visual identity matches the rest of the site (navy hero band, cream cards, diamond accents).
 
-The `generate-workout` edge function gets a new optional `locale` field in the payload; system prompt switches language so the AI returns the plan in the user's language. Validation list values (sexo/nivel/etc.) stay in PT internally — only the prompt language changes.
+**New route `/{-$locale}/meus-treinos/$id`**:
+- Reuses the existing `ResultadoView` (extract from `gerar.tsx` into `src/components/WorkoutResult.tsx` so both `/gerar` and the detail page share it).
+- Loads the workout from `saved_workouts` by id (RLS scopes to owner).
+- Same copy / print / day-tabs behavior.
 
-## SEO / metadata
-- Each route's `head()` becomes a function of `params.locale`, returning translated `title`, `description`, `og:*` from the `meta` namespace.
-- Add `<link rel="alternate" hreflang="…">` tags for each locale + `x-default` on every leaf.
-- Update `<html lang>` in `__root.tsx`'s `RootShell` to reflect active locale (read from router state).
-- Sitemap (`sitemap[.]xml.ts`) emits all 4 locale variants per route with hreflang annotations.
-- Canonical URL per route uses the locale-prefixed path.
+**Header (`SiteHeader`)**: add "Meus treinos" link visible only when authenticated.
 
-## Switcher placement & a11y
-- `<select>` styled to match header, accessible label "Language / Idioma".
-- Mobile: same dropdown, compact.
+---
 
-## Technical notes
-- Files to add: `src/i18n/index.ts`, `src/i18n/locales/{pt,en,es,fr}.json`, `src/components/LanguageSwitcher.tsx`.
-- Files to rename/move: `index.tsx`, `gerar.tsx`, `sobre.tsx`, `login.tsx` → under `{-$locale}.` prefix.
-- Files to edit: `SiteChrome.tsx`, `__root.tsx`, `sitemap[.]xml.ts`, `supabase/functions/generate-workout/index.ts`.
-- Packages: `bun add react-i18next i18next`.
-- All `<Link to="...">` calls updated to include `params={{ locale }}` (using current locale from `useParams({ strict: false })`).
+## 2. Exercise demo videos
 
-## Out of scope
-- Translating dynamic AI-generated workout titles already returned by the model (handled via prompt language above).
-- Right-to-left languages (none in scope).
-- Server-side IP geolocation (browser-language only, per your choice).
+Approach: link each exercise to a YouTube search URL based on the exercise name + locale ("how to do {name}" / "como fazer {name}"). This needs zero API keys, zero storage, and works in 4 languages.
+
+In `DiaCard`, each exercise row gets a small "Ver demonstração" button (Play icon) that opens a new tab to:
+`https://www.youtube.com/results?search_query=<encoded query>`
+
+Query is built per locale:
+- pt: `como fazer {nome} exercício`
+- en: `how to do {nome} exercise proper form`
+- es: `cómo hacer {nome} ejercicio`
+- fr: `comment faire {nome} exercice`
+
+Why this over embedded video: real workout names are open-ended (AI-generated), so a static demo library would miss most. A YouTube search guarantees a relevant tutorial for any exercise, in the user's language, with no extra infra and no licensing concerns.
+
+(If later you want richer UX, we can upgrade to a curated dictionary of common lifts mapped to specific videos, or use the YouTube Data API to inline-embed the top result — out of scope here.)
+
+---
+
+## i18n
+Add keys in all 4 locales (`pt`, `en`, `es`, `fr`):
+- `nav.my_workouts`
+- `meus.title`, `meus.empty_title`, `meus.empty_cta`, `meus.open`, `meus.rename`, `meus.delete`, `meus.delete_confirm`, `meus.saved_at`, `meus.rename_placeholder`
+- `gerar.saved_auto`, `gerar.rename_save`
+- `gerar.see_demo`
+
+---
+
+## Files
+
+**Created**
+- `supabase/migrations/<ts>_saved_workouts.sql` — table + RLS + grants + updated_at trigger
+- `src/components/WorkoutResult.tsx` — extracted ResultadoView + DiaCard + Badge, with exercise demo button
+- `src/routes/{-$locale}/meus-treinos.tsx` — dashboard list
+- `src/routes/{-$locale}/meus-treinos.$id.tsx` — detail view
+- `src/lib/exerciseVideo.ts` — `youtubeSearchUrl(name, locale)` helper
+
+**Edited**
+- `supabase/functions/generate-workout/index.ts` — insert into `saved_workouts`, return `savedWorkoutId`
+- `src/routes/{-$locale}/gerar.tsx` — use shared `WorkoutResult`, rename input wired to update
+- `src/components/SiteChrome.tsx` — add "Meus treinos" nav link when authenticated
+- `src/i18n/locales/{pt,en,es,fr}.json` — new keys
+- `src/integrations/supabase/types.ts` — regenerated after migration
+
+## Open questions
+1. Confirm the YouTube-search approach for demos is acceptable (vs embedded video or curated library)?
+2. Should saved workouts also count against the monthly limit? Current plan: yes, unchanged — quota is counted at generation time, saving is automatic and free.

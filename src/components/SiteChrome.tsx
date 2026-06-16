@@ -30,6 +30,7 @@ export function SiteHeader() {
         <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
           <Link to="/{-$locale}" params={{ locale: lp }} activeOptions={{ exact: true }} activeProps={{ className: "text-primary" }} className="hover:text-primary transition-colors">{t("nav.home")}</Link>
           <Link to="/{-$locale}/gerar" params={{ locale: lp }} activeProps={{ className: "text-primary" }} className="hover:text-primary transition-colors">{t("nav.generate")}</Link>
+          <Link to="/{-$locale}/meus-treinos" params={{ locale: lp }} activeProps={{ className: "text-primary" }} className="hover:text-primary transition-colors">{t("nav.my_workouts")}</Link>
           <Link to="/{-$locale}/sobre" params={{ locale: lp }} activeProps={{ className: "text-primary" }} className="hover:text-primary transition-colors">{t("nav.about")}</Link>
         </nav>
         <div className="flex items-center gap-2">
