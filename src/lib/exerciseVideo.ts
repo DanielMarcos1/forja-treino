@@ -11,8 +11,3 @@ export function youtubeSearchUrl(name: string, locale: Locale): string {
   const tpl = QUERY_TEMPLATES[locale] ?? QUERY_TEMPLATES.pt;
   return `https://www.youtube.com/results?search_query=${encodeURIComponent(tpl(name))}`;
 }
-
-export function youtubeEmbedSearchUrl(name: string, locale: Locale): string {
-  const tpl = QUERY_TEMPLATES[locale] ?? QUERY_TEMPLATES.pt;
-  return `https://www.youtube-nocookie.com/embed?listType=search&list=${encodeURIComponent(tpl(name))}`;
-}
