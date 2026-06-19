@@ -10,7 +10,7 @@ import { useLocale, localeParam } from "@/i18n/useLocale";
 import { isLocale, DEFAULT_LOCALE, type Locale } from "@/i18n";
 import { localizedHead } from "@/i18n/seo";
 
-export const Route = createFileRoute("/{-$locale}/meus-treinos")({
+export const Route = createFileRoute("/{-$locale}/meus-treinos/")({
   head: ({ params }) => {
     const locale: Locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
     return localizedHead(locale, "/meus-treinos", {
