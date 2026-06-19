@@ -136,15 +136,14 @@ function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; clas
               <span className="font-semibold text-primary">{e.reps}</span>
             </div>
             {e.observacao && <div className="mt-2 text-sm text-muted-foreground">{e.observacao}</div>}
-            <a
-              href={youtubeSearchUrl(e.nome, locale)}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() => window.open(youtubeSearchUrl(e.nome, locale), "_blank", "noopener,noreferrer")}
               className="no-print mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
             >
               <PlayCircle className="h-4 w-4" />
               {t("gerar.see_demo")}
-            </a>
+            </button>
           </div>
         ))}
       </div>
