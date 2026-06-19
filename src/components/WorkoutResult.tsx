@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Copy, Printer, RefreshCcw, Dumbbell, Clock, PlayCircle, ArrowLeft, X } from "lucide-react";
+import { Copy, Printer, RefreshCcw, Dumbbell, Clock, PlayCircle, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
-import { youtubeEmbedSearchUrl, youtubeSearchUrl } from "@/lib/exerciseVideo";
+import { youtubeSearchUrl } from "@/lib/exerciseVideo";
 import { useLocale } from "@/i18n/useLocale";
 
 export type Exercicio = { nome: string; series: number; reps: string; descanso: string; observacao?: string };
@@ -117,7 +116,6 @@ function Badge({ icon, children }: { icon: React.ReactNode; children: React.Reac
 function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; className?: string }) {
   const { t } = useTranslation();
   const locale = useLocale();
-  const [demoExercise, setDemoExercise] = useState<string | null>(null);
   return (
     <div className={`rounded-3xl bg-card p-7 shadow-sm md:p-8 ${className}`}>
       <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -138,41 +136,15 @@ function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; clas
               <span className="font-semibold text-primary">{e.reps}</span>
             </div>
             {e.observacao && <div className="mt-2 text-sm text-muted-foreground">{e.observacao}</div>}
-            <button
-              type="button"
-              onClick={() => setDemoExercise((current) => (current === e.nome ? null : e.nome))}
+            <a
+              href={youtubeSearchUrl(e.nome, locale)}
+              target="_top"
+              rel="noopener noreferrer"
               className="no-print mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
             >
               <PlayCircle className="h-4 w-4" />
               {t("gerar.see_demo")}
-            </button>
-            {demoExercise === e.nome && (
-              <div className="no-print mt-4 overflow-hidden rounded-2xl border border-border bg-card">
-                <div className="flex items-center justify-between gap-3 border-b border-border px-3 py-2">
-                  <span className="text-xs font-semibold text-foreground">{e.nome}</span>
-                  <div className="flex items-center gap-3">
-                    <a
-                      href={youtubeSearchUrl(e.nome, locale)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs font-semibold text-primary hover:underline"
-                    >
-                      {t("gerar.open_youtube")}
-                    </a>
-                    <button type="button" onClick={() => setDemoExercise(null)} aria-label={t("gerar.close_demo")} className="text-muted-foreground transition hover:text-foreground">
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
-                <iframe
-                  title={`${t("gerar.see_demo")}: ${e.nome}`}
-                  src={youtubeEmbedSearchUrl(e.nome, locale)}
-                  className="aspect-video w-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
-              </div>
-            )}
+            </a>
           </div>
         ))}
       </div>
