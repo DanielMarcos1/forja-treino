@@ -1,14 +1,6 @@
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  ArrowLeft,
-  Clock,
-  Copy,
-  Dumbbell,
-  PlayCircle,
-  Printer,
-  RefreshCcw,
-} from "lucide-react";
+import { ArrowLeft, Clock, Copy, Dumbbell, PlayCircle, Printer, RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
 import { useLocale } from "@/i18n/useLocale";
 import { youtubeSearchUrl } from "@/lib/exerciseVideo";
@@ -86,9 +78,7 @@ export function WorkoutResult({
       <div className="relative overflow-hidden rounded-3xl bg-navy p-6 text-cream sm:p-8 md:p-10">
         <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 diamond bg-primary/40" />
         <div className="pointer-events-none absolute -bottom-12 -left-8 h-36 w-36 diamond bg-secondary/40" />
-        <h1 className="relative font-display text-2xl sm:text-3xl md:text-4xl">
-          {treino.titulo}
-        </h1>
+        <h1 className="relative font-display text-2xl sm:text-3xl md:text-4xl">{treino.titulo}</h1>
         <p className="relative mt-3 max-w-2xl text-cream/85">{treino.resumo}</p>
         <div className="relative mt-6 flex flex-wrap gap-2">
           <Badge icon={<Dumbbell className="h-3.5 w-3.5" />}>
