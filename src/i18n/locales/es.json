@@ -144,7 +144,9 @@
     "tips": "Consejos",
     "err_quota": "Has alcanzado el límite de 3 entrenos este mes. Inténtalo el próximo mes.",
     "saved_auto": "Entreno guardado automáticamente en Mis entrenos",
-    "see_demo": "Ver demostración"
+    "see_demo": "Ver demostración",
+    "open_youtube": "Abrir en YouTube",
+    "close_demo": "Cerrar demostración"
   },
   "meta": {
     "meus_title": "Mis entrenos — Forja",

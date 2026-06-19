@@ -144,7 +144,9 @@
     "tips": "Conseils",
     "err_quota": "Vous avez atteint la limite de 3 entraînements ce mois-ci. Réessayez le mois prochain.",
     "saved_auto": "Entraînement enregistré automatiquement dans Mes entraînements",
-    "see_demo": "Voir la démo"
+    "see_demo": "Voir la démo",
+    "open_youtube": "Ouvrir sur YouTube",
+    "close_demo": "Fermer la démo"
   },
   "meta": {
     "meus_title": "Mes entraînements — Forja",
