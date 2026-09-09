@@ -59,20 +59,20 @@ export function ExerciseDemo({ name, nameEn }: Props) {
           {!searching && match && !imgFailed && (
             <div className="relative">
               {!imgLoaded && (
-                <div className="flex h-56 items-center justify-center bg-muted/40">
+                <div className="absolute inset-0 flex items-center justify-center bg-muted/40">
                   <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
                 </div>
               )}
               <img
                 src={match.gifUrl}
                 alt={t("gerar.demo_alt", { name })}
-                loading="lazy"
                 onLoad={() => setImgLoaded(true)}
                 onError={() => setImgFailed(true)}
-                className={`mx-auto block w-full max-w-[360px] bg-white ${imgLoaded ? "" : "hidden"}`}
+                className={`mx-auto block min-h-56 w-full max-w-[360px] bg-white transition-opacity ${imgLoaded ? "opacity-100" : "opacity-0"}`}
               />
             </div>
           )}
+
 
           {unavailable && (
             <div className="p-5 text-sm text-muted-foreground">{t("gerar.demo_not_found")}</div>
