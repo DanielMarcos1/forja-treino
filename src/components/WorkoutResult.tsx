@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { ArrowLeft, Clock, Copy, Dumbbell, PlayCircle, Printer, RefreshCcw } from "lucide-react";
+import { ArrowLeft, Clock, Copy, Dumbbell, Printer, RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
-import { useLocale } from "@/i18n/useLocale";
-import { youtubeSearchUrl } from "@/lib/exerciseVideo";
+import { ExerciseDemo } from "@/components/ExerciseDemo";
 
 export type Exercicio = {
   nome: string;
+  nomeEn?: string;
   series: number;
   reps: string;
   descanso: string;
