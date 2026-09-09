@@ -170,7 +170,6 @@ function Badge({ icon, children }: { icon: ReactNode; children: ReactNode }) {
 
 function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; className?: string }) {
   const { t } = useTranslation();
-  const locale = useLocale();
 
   return (
     <div className={`rounded-3xl bg-card p-7 shadow-sm md:p-8 ${className}`}>
@@ -202,15 +201,7 @@ function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; clas
             {e.observacao && (
               <div className="mt-2 text-sm text-muted-foreground">{e.observacao}</div>
             )}
-            <a
-              href={youtubeSearchUrl(e.nome, locale)}
-              target="_top"
-              rel="noopener noreferrer"
-              className="no-print mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
-            >
-              <PlayCircle className="h-4 w-4" />
-              {t("gerar.see_demo")}
-            </a>
+            <ExerciseDemo name={e.nome} nameEn={e.nomeEn} />
           </div>
         ))}
       </div>
