@@ -30,9 +30,16 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/{-$locale}/gerar", params: { locale: lp } });
+    const go = () => navigate({ to: "/{-$locale}/gerar", params: { locale: lp } });
+
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) go();
     });
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) go();
+    });
+
+    return () => sub.subscription.unsubscribe();
   }, [navigate, lp]);
 
   async function entrar() {
@@ -40,7 +47,7 @@ function Login() {
     try {
       const localePath = locale === DEFAULT_LOCALE ? "" : `/${locale}`;
       const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin + `${localePath}/gerar`,
+        redirect_uri: `${window.location.origin}${localePath}/login`,
       });
       if (result.error) {
         toast.error(t("login.error_generic"));
