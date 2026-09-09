@@ -146,7 +146,11 @@
     "saved_auto": "Treino salvo automaticamente em Meus treinos",
     "see_demo": "Ver demonstração",
     "open_youtube": "Abrir no YouTube",
-    "close_demo": "Fechar demonstração"
+    "close_demo": "Fechar demonstração",
+    "demo_loading": "Procurando a demonstração...",
+    "demo_not_found": "Não encontramos uma animação para este exercício. Veja um vídeo no YouTube.",
+    "demo_alt": "Animação demonstrando {{name}}",
+    "demo_hint": "Animação ilustrativa do movimento"
   },
   "meta": {
     "meus_title": "Meus treinos — Forja",

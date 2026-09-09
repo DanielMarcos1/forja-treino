@@ -146,7 +146,11 @@
     "saved_auto": "Workout saved automatically to My workouts",
     "see_demo": "See demo",
     "open_youtube": "Open on YouTube",
-    "close_demo": "Close demo"
+    "close_demo": "Close demo",
+    "demo_loading": "Looking for the demo...",
+    "demo_not_found": "No animation found for this exercise. Watch a video on YouTube instead.",
+    "demo_alt": "Animation demonstrating {{name}}",
+    "demo_hint": "Illustrative animation of the movement"
   },
   "meta": {
     "meus_title": "My workouts — Forja",

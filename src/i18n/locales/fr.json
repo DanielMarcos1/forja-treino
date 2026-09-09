@@ -146,7 +146,11 @@
     "saved_auto": "Entraînement enregistré automatiquement dans Mes entraînements",
     "see_demo": "Voir la démo",
     "open_youtube": "Ouvrir sur YouTube",
-    "close_demo": "Fermer la démo"
+    "close_demo": "Fermer la démo",
+    "demo_loading": "Recherche de la démonstration...",
+    "demo_not_found": "Aucune animation trouvée pour cet exercice. Regardez une vidéo sur YouTube.",
+    "demo_alt": "Animation illustrant {{name}}",
+    "demo_hint": "Animation illustrative du mouvement"
   },
   "meta": {
     "meus_title": "Mes entraînements — Forja",
