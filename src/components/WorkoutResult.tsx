@@ -193,25 +193,25 @@ function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; clas
               key={demoId}
               className="rounded-2xl border border-border bg-background p-4 ex-card print-avoid-break"
             >
-            <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <div className="font-semibold">{e.nome}</div>
-              <div className="text-sm text-muted-foreground">{e.descanso}</div>
-            </div>
-            <div className="mt-1 text-sm">
-              <span className="font-semibold text-primary">{e.series}</span>
-              <span className="text-muted-foreground"> × </span>
-              <span className="font-semibold text-primary">{e.reps}</span>
-            </div>
-            {e.observacao && (
-              <div className="mt-2 text-sm text-muted-foreground">{e.observacao}</div>
-            )}
-            <ExerciseDemo
-              key={demoId}
-              name={e.nome}
-              nameEn={e.nomeEn}
-              open={openDemoId === demoId}
-              onToggle={() => setOpenDemoId((current) => (current === demoId ? null : demoId))}
-            />
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <div className="font-semibold">{e.nome}</div>
+                <div className="text-sm text-muted-foreground">{e.descanso}</div>
+              </div>
+              <div className="mt-1 text-sm">
+                <span className="font-semibold text-primary">{e.series}</span>
+                <span className="text-muted-foreground"> × </span>
+                <span className="font-semibold text-primary">{e.reps}</span>
+              </div>
+              {e.observacao && (
+                <div className="mt-2 text-sm text-muted-foreground">{e.observacao}</div>
+              )}
+              <ExerciseDemo
+                key={demoId}
+                name={e.nome}
+                nameEn={e.nomeEn}
+                open={openDemoId === demoId}
+                onToggle={() => setOpenDemoId((current) => (current === demoId ? null : demoId))}
+              />
             </div>
           );
         })}
