@@ -170,7 +170,7 @@ function Badge({ icon, children }: { icon: ReactNode; children: ReactNode }) {
 
 function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; className?: string }) {
   const { t } = useTranslation();
-  const [openDemoIndex, setOpenDemoIndex] = useState<number | null>(null);
+  const [openDemoId, setOpenDemoId] = useState<string | null>(null);
 
   return (
     <div className={`rounded-3xl bg-card p-7 shadow-sm md:p-8 ${className}`}>
@@ -185,11 +185,14 @@ function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; clas
       </p>
 
       <div className="mt-6 grid gap-3 ex-grid">
-        {dia.exercicios.map((e, i) => (
-          <div
-            key={i}
-            className="rounded-2xl border border-border bg-background p-4 ex-card print-avoid-break"
-          >
+        {dia.exercicios.map((e, i) => {
+          const demoId = `${e.nomeEn ?? e.nome}-${i}`;
+
+          return (
+            <div
+              key={demoId}
+              className="rounded-2xl border border-border bg-background p-4 ex-card print-avoid-break"
+            >
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <div className="font-semibold">{e.nome}</div>
               <div className="text-sm text-muted-foreground">{e.descanso}</div>
@@ -203,13 +206,15 @@ function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; clas
               <div className="mt-2 text-sm text-muted-foreground">{e.observacao}</div>
             )}
             <ExerciseDemo
+              key={demoId}
               name={e.nome}
               nameEn={e.nomeEn}
-              open={openDemoIndex === i}
-              onToggle={() => setOpenDemoIndex((current) => (current === i ? null : i))}
+              open={openDemoId === demoId}
+              onToggle={() => setOpenDemoId((current) => (current === demoId ? null : demoId))}
             />
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
 
       <p className="mt-5 text-sm text-muted-foreground">
