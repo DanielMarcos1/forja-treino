@@ -84,7 +84,6 @@ export function ExerciseDemo({ name, nameEn, open, onToggle }: Props) {
             </div>
           )}
 
-
           {unavailable && (
             <div className="p-5 text-sm text-muted-foreground">{t("gerar.demo_not_found")}</div>
           )}
