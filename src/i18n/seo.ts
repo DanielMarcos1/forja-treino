@@ -1,6 +1,8 @@
 import i18n, { SUPPORTED_LOCALES, DEFAULT_LOCALE, type Locale } from "@/i18n";
+import socialShareImage from "@/assets/forja-social-share.jpg.asset.json";
 
 const BASE_URL = "https://forjatreino.com";
+const SOCIAL_SHARE_IMAGE_URL = `${BASE_URL}${socialShareImage.url}`;
 
 /** Build absolute URL for a given locale + base path (e.g. "/", "/gerar"). */
 export function urlFor(locale: Locale, path: string): string {
@@ -42,8 +44,18 @@ export function localizedHead(locale: Locale, path: string, keys: Keys) {
       { name: "description", content: desc },
       { property: "og:title", content: ogTitle },
       { property: "og:description", content: ogDesc },
+      { property: "og:type", content: "website" },
       { property: "og:url", content: url },
       { property: "og:locale", content: ogLocale(locale) },
+      { property: "og:image", content: SOCIAL_SHARE_IMAGE_URL },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Forja — Treinos personalizados por IA" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: ogTitle },
+      { name: "twitter:description", content: ogDesc },
+      { name: "twitter:image", content: SOCIAL_SHARE_IMAGE_URL },
+      { name: "twitter:image:alt", content: "Forja — Treinos personalizados por IA" },
     ],
     links: [
       { rel: "canonical", href: url },
@@ -55,9 +67,13 @@ export function localizedHead(locale: Locale, path: string, keys: Keys) {
 
 function ogLocale(l: Locale): string {
   switch (l) {
-    case "pt": return "pt_BR";
-    case "en": return "en_US";
-    case "es": return "es_ES";
-    case "fr": return "fr_FR";
+    case "pt":
+      return "pt_BR";
+    case "en":
+      return "en_US";
+    case "es":
+      return "es_ES";
+    case "fr":
+      return "fr_FR";
   }
 }

@@ -79,23 +79,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Forja — Treinos personalizados por IA" },
-      { name: "description", content: "Monte um plano de treino personalizado em segundos com inteligência artificial." },
+      {
+        name: "description",
+        content: "Monte um plano de treino personalizado em segundos com inteligência artificial.",
+      },
       { name: "author", content: "Forja" },
-      { property: "og:title", content: "Forja — Treinos personalizados por IA" },
-      { property: "og:description", content: "Monte um plano de treino personalizado em segundos com inteligência artificial." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "Forja — Treinos personalizados por IA" },
-      { name: "twitter:description", content: "Monte um plano de treino personalizado em segundos com inteligência artificial." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/eb9521e2-47db-4e0c-b43c-83913b265246" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/eb9521e2-47db-4e0c-b43c-83913b265246" },
       { name: "google-site-verification", content: "FACHO_r2CAph0Z6FwhN3Izhhe_1mdVWKzS4nHOzssmk" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap",
+      },
     ],
     scripts: [
       {
@@ -119,7 +117,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               "@type": "WebApplication",
               name: "Forja",
               url: "https://forjatreino.com",
-              description: "AI-powered workout generator that builds personalized training plans in seconds.",
+              description:
+                "AI-powered workout generator that builds personalized training plans in seconds.",
               applicationCategory: "Fitness",
               operatingSystem: "Web",
               offers: { "@type": "Offer", price: "0", priceCurrency: "BRL" },
@@ -162,13 +161,21 @@ function RootComponent() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     let stored: string | null = null;
-    try { stored = localStorage.getItem(LOCALE_KEY); } catch { /* ignore */ }
+    try {
+      stored = localStorage.getItem(LOCALE_KEY);
+    } catch {
+      /* ignore */
+    }
     if (stored) return;
     // Only auto-redirect from the bare PT root, not from already-prefixed paths.
     if (pathname !== "/") return;
     const detected = detectBrowserLocale();
     if (detected !== DEFAULT_LOCALE && isLocale(detected)) {
-      try { localStorage.setItem(LOCALE_KEY, detected); } catch { /* ignore */ }
+      try {
+        localStorage.setItem(LOCALE_KEY, detected);
+      } catch {
+        /* ignore */
+      }
       navigate({ to: `/${detected}`, replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
