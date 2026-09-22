@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft, Clock, Copy, Dumbbell, Printer, RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
@@ -134,7 +134,7 @@ export function WorkoutResult({
       </div>
 
       <div className="mt-6 space-y-6 print:space-y-0">
-        <DiaCard dia={dia} index={activeDay} className="print:hidden" />
+        <DiaCard key={activeDay} dia={dia} index={activeDay} className="print:hidden" />
         <div className="hidden print:block">
           {treino.dias.map((d, i) => (
             <div key={i} className="print-page">
@@ -170,6 +170,7 @@ function Badge({ icon, children }: { icon: ReactNode; children: ReactNode }) {
 
 function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; className?: string }) {
   const { t } = useTranslation();
+  const [openDemoIndex, setOpenDemoIndex] = useState<number | null>(null);
 
   return (
     <div className={`rounded-3xl bg-card p-7 shadow-sm md:p-8 ${className}`}>
@@ -201,7 +202,12 @@ function DiaCard({ dia, index, className = "" }: { dia: Dia; index: number; clas
             {e.observacao && (
               <div className="mt-2 text-sm text-muted-foreground">{e.observacao}</div>
             )}
-            <ExerciseDemo name={e.nome} nameEn={e.nomeEn} />
+            <ExerciseDemo
+              name={e.nome}
+              nameEn={e.nomeEn}
+              open={openDemoIndex === i}
+              onToggle={() => setOpenDemoIndex((current) => (current === i ? null : i))}
+            />
           </div>
         ))}
       </div>
