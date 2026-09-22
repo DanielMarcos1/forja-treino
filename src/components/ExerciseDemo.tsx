@@ -5,12 +5,16 @@ import { useLocale } from "@/i18n/useLocale";
 import { youtubeSearchUrl } from "@/lib/exerciseVideo";
 import { findExerciseGif, type ExerciseMatch } from "@/lib/exerciseLibrary/match";
 
-type Props = { name: string; nameEn?: string };
+type Props = {
+  name: string;
+  nameEn?: string;
+  open: boolean;
+  onToggle: () => void;
+};
 
-export function ExerciseDemo({ name, nameEn }: Props) {
+export function ExerciseDemo({ name, nameEn, open, onToggle }: Props) {
   const { t } = useTranslation();
   const locale = useLocale();
-  const [open, setOpen] = useState(false);
   const [searching, setSearching] = useState(false);
   const [match, setMatch] = useState<ExerciseMatch | null | undefined>(undefined);
   const [imgLoaded, setImgLoaded] = useState(false);
@@ -35,13 +39,20 @@ export function ExerciseDemo({ name, nameEn }: Props) {
     };
   }, [open, match, name, nameEn]);
 
+  useEffect(() => {
+    if (!open) return;
+    setImgLoaded(false);
+    setImgFailed(false);
+  }, [open]);
+
   const unavailable = !searching && (match === null || imgFailed);
 
   return (
     <div className="no-print">
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={onToggle}
+        aria-expanded={open}
         className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary transition hover:underline"
       >
         {open ? <X className="h-4 w-4" /> : <PlayCircle className="h-4 w-4" />}
@@ -72,7 +83,6 @@ export function ExerciseDemo({ name, nameEn }: Props) {
               />
             </div>
           )}
-
 
           {unavailable && (
             <div className="p-5 text-sm text-muted-foreground">{t("gerar.demo_not_found")}</div>
