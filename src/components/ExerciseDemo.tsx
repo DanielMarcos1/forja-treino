@@ -15,37 +15,72 @@ type Props = {
 export function ExerciseDemo({ name, nameEn, open, onToggle }: Props) {
   const { t } = useTranslation();
   const locale = useLocale();
-  const [searching, setSearching] = useState(false);
+  const [status, setStatus] = useState<"idle" | "searching" | "loading" | "ready" | "error">(
+    "idle",
+  );
   const [match, setMatch] = useState<ExerciseMatch | null | undefined>(undefined);
-  const [imgLoaded, setImgLoaded] = useState(false);
-  const [imgFailed, setImgFailed] = useState(false);
 
   useEffect(() => {
-    if (!open || match !== undefined) return;
-    let alive = true;
-    setSearching(true);
+    if (!open) {
+      setMatch(undefined);
+      setStatus("idle");
+      return;
+    }
+
+    let cancelled = false;
+    let image: HTMLImageElement | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+    setMatch(undefined);
+    setStatus("searching");
+
     findExerciseGif(name, nameEn)
       .then((m) => {
-        if (alive) setMatch(m);
+        if (cancelled) return;
+        setMatch(m);
+
+        if (!m) {
+          setStatus("error");
+          return;
+        }
+
+        setStatus("loading");
+        image = new Image();
+        image.onload = () => {
+          if (cancelled) return;
+          if (timeoutId) clearTimeout(timeoutId);
+          setStatus("ready");
+        };
+        image.onerror = () => {
+          if (cancelled) return;
+          if (timeoutId) clearTimeout(timeoutId);
+          setStatus("error");
+        };
+        timeoutId = setTimeout(() => {
+          if (!cancelled) setStatus("error");
+        }, 8000);
+        image.src = m.gifUrl;
       })
       .catch(() => {
-        if (alive) setMatch(null);
-      })
-      .finally(() => {
-        if (alive) setSearching(false);
+        if (!cancelled) {
+          setMatch(null);
+          setStatus("error");
+        }
       });
+
     return () => {
-      alive = false;
+      cancelled = true;
+      if (timeoutId) clearTimeout(timeoutId);
+      if (image) {
+        image.onload = null;
+        image.onerror = null;
+        image.src = "";
+      }
     };
-  }, [open, match, name, nameEn]);
+  }, [open, name, nameEn]);
 
-  useEffect(() => {
-    if (!open) return;
-    setImgLoaded(false);
-    setImgFailed(false);
-  }, [open]);
-
-  const unavailable = !searching && (match === null || imgFailed);
+  const loading = status === "searching" || status === "loading";
+  const unavailable = status === "error";
 
   return (
     <div className="no-print">
@@ -61,25 +96,18 @@ export function ExerciseDemo({ name, nameEn, open, onToggle }: Props) {
 
       {open && (
         <div className="mt-3 overflow-hidden rounded-2xl border border-border bg-card">
-          {searching && (
+          {loading && (
             <div className="flex items-center justify-center gap-2 p-8 text-sm text-muted-foreground">
               <Loader2 className="h-4 w-4 animate-spin" /> {t("gerar.demo_loading")}
             </div>
           )}
 
-          {!searching && match && !imgFailed && (
-            <div className="relative">
-              {!imgLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center bg-muted/40">
-                  <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
-                </div>
-              )}
+          {status === "ready" && match && (
+            <div>
               <img
                 src={match.gifUrl}
                 alt={t("gerar.demo_alt", { name })}
-                onLoad={() => setImgLoaded(true)}
-                onError={() => setImgFailed(true)}
-                className={`mx-auto block min-h-56 w-full max-w-[360px] bg-white transition-opacity ${imgLoaded ? "opacity-100" : "opacity-0"}`}
+                className="mx-auto block min-h-56 w-full max-w-[360px] bg-white"
               />
             </div>
           )}
@@ -90,7 +118,7 @@ export function ExerciseDemo({ name, nameEn, open, onToggle }: Props) {
 
           <div className="flex items-center justify-between gap-3 border-t border-border px-4 py-3">
             <span className="text-xs text-muted-foreground">
-              {match && !imgFailed ? t("gerar.demo_hint") : ""}
+              {status === "ready" ? t("gerar.demo_hint") : ""}
             </span>
             <a
               href={youtubeSearchUrl(name, locale)}
