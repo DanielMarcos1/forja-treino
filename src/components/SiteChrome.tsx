@@ -31,12 +31,41 @@ export function SiteHeader() {
       <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-4 py-4 sm:px-6 md:flex md:justify-between md:gap-3">
         <Logo className="min-w-0" />
         <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
-          <Link to="/{-$locale}" params={{ locale: lp }} activeOptions={{ exact: true }} activeProps={{ className: "text-primary" }} className="hover:text-primary transition-colors">{t("nav.home")}</Link>
-          <Link to="/{-$locale}/gerar" params={{ locale: lp }} activeProps={{ className: "text-primary" }} className="hover:text-primary transition-colors">{t("nav.generate")}</Link>
+          <Link
+            to="/{-$locale}"
+            params={{ locale: lp }}
+            activeOptions={{ exact: true }}
+            activeProps={{ className: "text-primary" }}
+            className="hover:text-primary transition-colors"
+          >
+            {t("nav.home")}
+          </Link>
+          <Link
+            to="/{-$locale}/gerar"
+            params={{ locale: lp }}
+            activeProps={{ className: "text-primary" }}
+            className="hover:text-primary transition-colors"
+          >
+            {t("nav.generate")}
+          </Link>
           {isAuthenticated && (
-            <Link to="/{-$locale}/meus-treinos" params={{ locale: lp }} activeProps={{ className: "text-primary" }} className="hover:text-primary transition-colors">{t("nav.my_workouts")}</Link>
+            <Link
+              to="/{-$locale}/meus-treinos"
+              params={{ locale: lp }}
+              activeProps={{ className: "text-primary" }}
+              className="hover:text-primary transition-colors"
+            >
+              {t("nav.my_workouts")}
+            </Link>
           )}
-          <Link to="/{-$locale}/sobre" params={{ locale: lp }} activeProps={{ className: "text-primary" }} className="hover:text-primary transition-colors">{t("nav.about")}</Link>
+          <Link
+            to="/{-$locale}/sobre"
+            params={{ locale: lp }}
+            activeProps={{ className: "text-primary" }}
+            className="hover:text-primary transition-colors"
+          >
+            {t("nav.about")}
+          </Link>
         </nav>
         <div className="flex shrink-0 items-center gap-2">
           <LanguageSwitcher />
@@ -72,7 +101,9 @@ export function SiteFooter() {
     <footer className="no-print mt-24 border-t border-border/60">
       <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-4 px-6 py-10 md:flex-row md:items-center">
         <Logo />
-        <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Forja — {t("footer.rights")}</p>
+        <p className="text-sm text-muted-foreground">
+          © {new Date().getFullYear()} Forja — {t("footer.rights")}
+        </p>
       </div>
     </footer>
   );
