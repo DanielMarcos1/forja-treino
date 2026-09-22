@@ -67,9 +67,13 @@ export function localizedHead(locale: Locale, path: string, keys: Keys) {
 
 function ogLocale(l: Locale): string {
   switch (l) {
-    case "pt": return "pt_BR";
-    case "en": return "en_US";
-    case "es": return "es_ES";
-    case "fr": return "fr_FR";
+    case "pt":
+      return "pt_BR";
+    case "en":
+      return "en_US";
+    case "es":
+      return "es_ES";
+    case "fr":
+      return "fr_FR";
   }
 }
