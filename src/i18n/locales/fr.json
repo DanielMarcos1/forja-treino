@@ -109,9 +109,9 @@
     },
     "place": {
       "academia": "Salle complète",
-      "casa-equip": "Maison avec matériel",
-      "casa-livre": "Maison sans matériel",
-      "ar-livre": "Plein air"
+      "casa_equipamentos": "Maison avec matériel",
+      "casa_sem_equipamentos": "Maison sans matériel",
+      "ar_livre": "Plein air"
     },
     "focus": {
       "Peito": "Pectoraux",

@@ -109,9 +109,9 @@
     },
     "place": {
       "academia": "Gimnasio completo",
-      "casa-equip": "Casa con equipo",
-      "casa-livre": "Casa sin equipo",
-      "ar-livre": "Al aire libre"
+      "casa_equipamentos": "Casa con equipo",
+      "casa_sem_equipamentos": "Casa sin equipo",
+      "ar_livre": "Al aire libre"
     },
     "focus": {
       "Peito": "Pecho",

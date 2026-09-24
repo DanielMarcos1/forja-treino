@@ -109,9 +109,9 @@
     },
     "place": {
       "academia": "Full gym",
-      "casa-equip": "Home with equipment",
-      "casa-livre": "Home without equipment",
-      "ar-livre": "Outdoors"
+      "casa_equipamentos": "Home with equipment",
+      "casa_sem_equipamentos": "Home without equipment",
+      "ar_livre": "Outdoors"
     },
     "focus": {
       "Peito": "Chest",

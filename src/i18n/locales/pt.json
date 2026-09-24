@@ -109,9 +109,9 @@
     },
     "place": {
       "academia": "Academia completa",
-      "casa-equip": "Casa com equipamentos",
-      "casa-livre": "Casa sem equipamentos",
-      "ar-livre": "Ar livre"
+      "casa_equipamentos": "Casa com equipamentos",
+      "casa_sem_equipamentos": "Casa sem equipamentos",
+      "ar_livre": "Ar livre"
     },
     "focus": {
       "Peito": "Peito",
