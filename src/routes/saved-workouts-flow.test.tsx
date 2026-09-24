@@ -8,6 +8,11 @@ const deleteResult = vi.fn();
 const updateResult = vi.fn();
 const toastError = vi.fn();
 const toastSuccess = vi.fn();
+const translation = {
+  t: (key: string, data?: Record<string, unknown>) =>
+    data ? `${key}:${Object.values(data).join(":")}` : key,
+  i18n: { language: "pt-BR" },
+};
 
 const rows = [{
   id: "w1", title: "Treino inicial", summary: "Resumo",
@@ -33,10 +38,7 @@ vi.mock("@tanstack/react-router", () => ({
 }));
 vi.mock("react-i18next", async (importOriginal) => {
   const actual = await importOriginal<typeof import("react-i18next")>();
-  return { ...actual, useTranslation: () => ({
-    t: (key: string, data?: Record<string, unknown>) => data ? `${key}:${Object.values(data).join(":")}` : key,
-    i18n: { language: "pt-BR" },
-  }) };
+  return { ...actual, useTranslation: () => translation };
 });
 vi.mock("@/components/SiteChrome", () => ({ SiteHeader: () => null, SiteFooter: () => null }));
 vi.mock("@/components/ui/sonner", () => ({ Toaster: () => null }));
