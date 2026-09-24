@@ -26,7 +26,7 @@ function Flag({ country, className = "" }: { country: string; className?: string
 
 const LOCALE_KEY = "forja.locale";
 
-function stripLocale(pathname: string): string {
+export function stripLocale(pathname: string): string {
   const m = pathname.match(/^\/(en|es|fr)(\/.*)?$/);
   if (!m) return pathname || "/";
   return m[2] || "/";
