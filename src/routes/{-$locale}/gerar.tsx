@@ -111,11 +111,28 @@ function Gerar() {
       });
       if (error) {
         const msg = error.message || "";
-        const ctx = (error as { context?: { error?: string } }).context;
-        if (ctx?.error === "quota_exceeded" || msg.includes("quota_exceeded"))
+        const context = (error as { context?: unknown }).context;
+        let responseStatus: number | undefined;
+        let responseError = "";
+
+        if (context instanceof Response) {
+          responseStatus = context.status;
+          try {
+            const payload = (await context.clone().json()) as { error?: string };
+            responseError = payload.error ?? "";
+          } catch {
+            responseError = "";
+          }
+        } else if (context && typeof context === "object") {
+          const payload = context as { error?: string; status?: number };
+          responseError = payload.error ?? "";
+          responseStatus = payload.status;
+        }
+
+        if (responseError === "quota_exceeded" || msg.includes("quota_exceeded"))
           toast.error(t("gerar.err_quota"));
-        else if (msg.includes("429")) toast.error(t("gerar.err_rate"));
-        else if (msg.includes("402")) toast.error(t("gerar.err_credits"));
+        else if (responseStatus === 429 || msg.includes("429")) toast.error(t("gerar.err_rate"));
+        else if (responseStatus === 402 || msg.includes("402")) toast.error(t("gerar.err_credits"));
         else toast.error(t("gerar.err_generic"));
         return;
       }

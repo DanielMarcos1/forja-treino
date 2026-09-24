@@ -158,4 +158,21 @@ describe("workout generation flow", () => {
     fireEvent.click(screen.getByRole("button", { name: /gerar.generate/ }));
     await waitFor(() => expect(toastError).toHaveBeenCalledWith(expected));
   });
+
+  it("reads the quota code from the function's HTTP response", async () => {
+    invoke.mockResolvedValue({
+      data: null,
+      error: {
+        message: "Edge Function returned a non-2xx status code",
+        context: new Response(JSON.stringify({ error: "quota_exceeded" }), {
+          status: 429,
+          headers: { "Content-Type": "application/json" },
+        }),
+      },
+    });
+    await renderGenerator();
+    await completeForm({ place: "casa_sem_equipamentos" });
+    fireEvent.click(screen.getByRole("button", { name: /gerar.generate/ }));
+    await waitFor(() => expect(toastError).toHaveBeenCalledWith("gerar.err_quota"));
+  });
 });

@@ -22,6 +22,9 @@ describe("workout generator security and business contract", () => {
     expect(source).toContain("Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)");
     expect(source).toContain("quota_exceeded");
     expect(source).toContain("workout_generations");
+    expect(source.indexOf("if (!resp.ok)")).toBeLessThan(
+      source.indexOf(".insert({ user_id: userId, local: input.local, objetivo: input.objetivo })"),
+    );
   });
 
   it("bounds and sanitizes all user input before building the prompt", () => {
@@ -57,5 +60,22 @@ describe("workout generator security and business contract", () => {
     expect(source).toContain('from("saved_workouts")');
     expect(source).toContain("savedWorkoutId");
     expect(source).toContain("remaining");
+  });
+
+  it("enforces equipment rules for every training environment", () => {
+    expect(source).toContain("EQUIPMENT_INSTR");
+    expect(source).toContain("Use EXCLUSIVAMENTE exercícios de peso corporal");
+    expect(source).toContain("Use exercícios praticáveis ao ar livre sem halteres");
+    expect(source).toContain("Não presuma máquinas de academia");
+    expect(source).toContain("REGRA OBRIGATÓRIA SOBRE O LOCAL");
+  });
+
+  it("records the canonical place and goal only after a successful AI response", () => {
+    expect(source).toContain(
+      ".insert({ user_id: userId, local: input.local, objetivo: input.objetivo })",
+    );
+    expect(source.indexOf("const treino = JSON.parse")).toBeLessThan(
+      source.indexOf(".insert({ user_id: userId, local: input.local, objetivo: input.objetivo })"),
+    );
   });
 });
