@@ -187,8 +187,7 @@ Deno.serve(async (req) => {
         "Use EXCLUSIVAMENTE exercícios de peso corporal que não exijam halteres, barras, anilhas, elásticos, máquinas ou banco de academia. Objetos domésticos só podem ser usados como apoio, nunca como carga.",
       ar_livre:
         "Use exercícios praticáveis ao ar livre sem halteres, barras, anilhas ou máquinas. Não presuma a existência de equipamentos de academia; bancos de parque ou barras fixas devem ter uma alternativa sem equipamento.",
-      casa:
-        "Priorize exercícios de peso corporal e não presuma equipamentos que não foram informados.",
+      casa: "Priorize exercícios de peso corporal e não presuma equipamentos que não foram informados.",
       outro: "Use somente os equipamentos explicitamente informados pelo usuário.",
     };
     const equipmentInstr = EQUIPMENT_INSTR[input.local] ?? EQUIPMENT_INSTR.outro;

@@ -22,8 +22,8 @@ describe("workout generator security and business contract", () => {
     expect(source).toContain("Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)");
     expect(source).toContain("quota_exceeded");
     expect(source).toContain("workout_generations");
-    expect(source.indexOf('if (!resp.ok)')).toBeLessThan(
-      source.indexOf('.insert({ user_id: userId, local: input.local, objetivo: input.objetivo })'),
+    expect(source.indexOf("if (!resp.ok)")).toBeLessThan(
+      source.indexOf(".insert({ user_id: userId, local: input.local, objetivo: input.objetivo })"),
     );
   });
 
@@ -72,10 +72,10 @@ describe("workout generator security and business contract", () => {
 
   it("records the canonical place and goal only after a successful AI response", () => {
     expect(source).toContain(
-      '.insert({ user_id: userId, local: input.local, objetivo: input.objetivo })',
+      ".insert({ user_id: userId, local: input.local, objetivo: input.objetivo })",
     );
     expect(source.indexOf("const treino = JSON.parse")).toBeLessThan(
-      source.indexOf('.insert({ user_id: userId, local: input.local, objetivo: input.objetivo })'),
+      source.indexOf(".insert({ user_id: userId, local: input.local, objetivo: input.objetivo })"),
     );
   });
 });
