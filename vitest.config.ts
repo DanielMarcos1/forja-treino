@@ -23,7 +23,7 @@ export default defineConfig({
         "src/hooks/useAuth.ts",
         "src/components/ExerciseDemo.tsx",
         "src/components/WorkoutResult.tsx",
-        "src/components/LanguageSwitcher.tsx"
+        "src/components/LanguageSwitcher.tsx",
       ],
       exclude: ["src/**/*.test.*", "src/lib/exerciseLibrary/index.json"],
       thresholds: {

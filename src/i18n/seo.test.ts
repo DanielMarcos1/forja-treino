@@ -14,12 +14,17 @@ describe("localized SEO", () => {
       titleKey: "meta.sobre_title",
       descKey: "meta.sobre_desc",
     });
-    expect(head.meta).toEqual(expect.arrayContaining([
-      expect.objectContaining({ property: "og:type", content: "website" }),
-      expect.objectContaining({ property: "og:locale", content: "es_ES" }),
-      expect.objectContaining({ name: "twitter:card", content: "summary_large_image" }),
-    ]));
+    expect(head.meta).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ property: "og:type", content: "website" }),
+        expect.objectContaining({ property: "og:locale", content: "es_ES" }),
+        expect.objectContaining({ name: "twitter:card", content: "summary_large_image" }),
+      ]),
+    );
     expect(head.links.filter((link) => link.rel === "alternate")).toHaveLength(5);
-    expect(head.links).toContainEqual({ rel: "canonical", href: "https://forjatreino.com/es/sobre" });
+    expect(head.links).toContainEqual({
+      rel: "canonical",
+      href: "https://forjatreino.com/es/sobre",
+    });
   });
 });

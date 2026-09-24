@@ -17,12 +17,16 @@ vi.mock("@/components/ui/sonner", () => ({ Toaster: () => null }));
 vi.mock("sonner", () => ({ toast: { error: (...args: unknown[]) => toastError(...args) } }));
 vi.mock("@/i18n/useLocale", () => ({ useLocale: () => "pt", localeParam: () => undefined }));
 vi.mock("@/components/WorkoutResult", () => ({
-  WorkoutResult: ({ treino, onBack }: { treino: { titulo: string }; onBack: () => void }) => <button onClick={onBack}>{treino.titulo}</button>,
+  WorkoutResult: ({ treino, onBack }: { treino: { titulo: string }; onBack: () => void }) => (
+    <button onClick={onBack}>{treino.titulo}</button>
+  ),
 }));
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: {
     auth: { getSession: (...args: unknown[]) => getSession(...args) },
-    from: () => ({ select: () => ({ eq: () => ({ maybeSingle: (...args: unknown[]) => maybeSingle(...args) }) }) }),
+    from: () => ({
+      select: () => ({ eq: () => ({ maybeSingle: (...args: unknown[]) => maybeSingle(...args) }) }),
+    }),
   },
 }));
 
@@ -42,7 +46,10 @@ describe("saved workout detail", () => {
     await renderDetail();
     const workout = await screen.findByRole("button", { name: "Treino aberto" });
     workout.click();
-    expect(navigate).toHaveBeenCalledWith({ to: "/{-$locale}/meus-treinos", params: { locale: undefined } });
+    expect(navigate).toHaveBeenCalledWith({
+      to: "/{-$locale}/meus-treinos",
+      params: { locale: undefined },
+    });
   });
 
   it("shows an error when the workout cannot be loaded", async () => {
@@ -55,6 +62,11 @@ describe("saved workout detail", () => {
   it("redirects signed-out visitors", async () => {
     getSession.mockResolvedValue({ data: { session: null } });
     await renderDetail();
-    await waitFor(() => expect(navigate).toHaveBeenCalledWith({ to: "/{-$locale}/login", params: { locale: undefined } }));
+    await waitFor(() =>
+      expect(navigate).toHaveBeenCalledWith({
+        to: "/{-$locale}/login",
+        params: { locale: undefined },
+      }),
+    );
   });
 });

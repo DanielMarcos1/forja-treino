@@ -3,12 +3,25 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { WorkoutResult, type Treino } from "./WorkoutResult";
 
 vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ t: (key: string, data?: Record<string, unknown>) => data ? `${key}:${Object.values(data).join(":")}` : key }),
+  useTranslation: () => ({
+    t: (key: string, data?: Record<string, unknown>) =>
+      data ? `${key}:${Object.values(data).join(":")}` : key,
+  }),
 }));
 vi.mock("sonner", () => ({ toast: { success: vi.fn() } }));
 vi.mock("@/components/ExerciseDemo", () => ({
-  ExerciseDemo: ({ name, open, onToggle }: { name: string; open: boolean; onToggle: () => void }) => (
-    <button aria-label={`demo-${name}`} aria-expanded={open} onClick={onToggle}>{name}</button>
+  ExerciseDemo: ({
+    name,
+    open,
+    onToggle,
+  }: {
+    name: string;
+    open: boolean;
+    onToggle: () => void;
+  }) => (
+    <button aria-label={`demo-${name}`} aria-expanded={open} onClick={onToggle}>
+      {name}
+    </button>
   ),
 }));
 
@@ -18,13 +31,28 @@ const treino: Treino = {
   diasPorSemana: 2,
   duracaoMin: 45,
   dias: [
-    { nome: "Peito", aquecimento: "Caminhada", alongamento: "Alongar", exercicios: [
-      { nome: "Supino", nomeEn: "bench press", series: 3, reps: "10", descanso: "60s", observacao: "Controle" },
-      { nome: "Crucifixo", nomeEn: "fly", series: 2, reps: "12", descanso: "45s" },
-    ] },
-    { nome: "Pernas", aquecimento: "Bike", alongamento: "Alongar pernas", exercicios: [
-      { nome: "Agachamento", series: 4, reps: "8", descanso: "90s" },
-    ] },
+    {
+      nome: "Peito",
+      aquecimento: "Caminhada",
+      alongamento: "Alongar",
+      exercicios: [
+        {
+          nome: "Supino",
+          nomeEn: "bench press",
+          series: 3,
+          reps: "10",
+          descanso: "60s",
+          observacao: "Controle",
+        },
+        { nome: "Crucifixo", nomeEn: "fly", series: 2, reps: "12", descanso: "45s" },
+      ],
+    },
+    {
+      nome: "Pernas",
+      aquecimento: "Bike",
+      alongamento: "Alongar pernas",
+      exercicios: [{ nome: "Agachamento", series: 4, reps: "8", descanso: "90s" }],
+    },
   ],
   dicas: ["Hidrate-se"],
 };
@@ -46,8 +74,12 @@ describe("WorkoutResult", () => {
   it("copies the complete workout and prints", () => {
     render(<WorkoutResult treino={treino} activeDay={0} setActiveDay={vi.fn()} />);
     fireEvent.click(screen.getByRole("button", { name: /gerar.copy/ }));
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(expect.stringContaining("Supino — 3x10 (60s) — Controle"));
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(expect.stringContaining("Hidrate-se"));
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+      expect.stringContaining("Supino — 3x10 (60s) — Controle"),
+    );
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+      expect.stringContaining("Hidrate-se"),
+    );
     fireEvent.click(screen.getByRole("button", { name: /gerar.print/ }));
     expect(window.print).toHaveBeenCalledOnce();
   });
@@ -55,7 +87,16 @@ describe("WorkoutResult", () => {
   it("renders optional actions", () => {
     const onBack = vi.fn();
     const onRestart = vi.fn();
-    render(<WorkoutResult treino={treino} activeDay={0} setActiveDay={vi.fn()} onBack={onBack} onRestart={onRestart} backLabel="Voltar" />);
+    render(
+      <WorkoutResult
+        treino={treino}
+        activeDay={0}
+        setActiveDay={vi.fn()}
+        onBack={onBack}
+        onRestart={onRestart}
+        backLabel="Voltar"
+      />,
+    );
     fireEvent.click(screen.getByRole("button", { name: /Voltar/ }));
     fireEvent.click(screen.getByRole("button", { name: /gerar.restart/ }));
     expect(onBack).toHaveBeenCalledOnce();

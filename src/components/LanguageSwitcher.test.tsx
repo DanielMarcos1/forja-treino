@@ -17,7 +17,10 @@ vi.mock("react-i18next", async (importOriginal) => {
 vi.mock("@/i18n/useLocale", () => ({ useLocale: () => "pt" }));
 
 describe("LanguageSwitcher", () => {
-  beforeEach(() => { pathname = "/gerar"; localStorage.clear(); });
+  beforeEach(() => {
+    pathname = "/gerar";
+    localStorage.clear();
+  });
 
   it("removes supported locale prefixes without changing the page", () => {
     expect(stripLocale("/en/meus-treinos/abc")).toBe("/meus-treinos/abc");

@@ -7,7 +7,9 @@ let routeLocale: string | undefined;
 vi.mock("@tanstack/react-router", () => ({ useParams: () => ({ locale: routeLocale }) }));
 
 describe("useLocale", () => {
-  beforeEach(() => { routeLocale = undefined; });
+  beforeEach(() => {
+    routeLocale = undefined;
+  });
 
   it("defaults to Portuguese and omits its route parameter", () => {
     const { result } = renderHook(() => useLocale());

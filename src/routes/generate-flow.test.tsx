@@ -13,12 +13,25 @@ vi.mock("@tanstack/react-router", () => ({
 }));
 vi.mock("react-i18next", async (importOriginal) => {
   const actual = await importOriginal<typeof import("react-i18next")>();
-  return { ...actual, useTranslation: () => ({ t: (key: string, data?: Record<string, unknown>) => data ? `${key}:${Object.values(data).join(":")}` : key }) };
+  return {
+    ...actual,
+    useTranslation: () => ({
+      t: (key: string, data?: Record<string, unknown>) =>
+        data ? `${key}:${Object.values(data).join(":")}` : key,
+    }),
+  };
 });
 vi.mock("@/components/SiteChrome", () => ({ SiteHeader: () => null, SiteFooter: () => null }));
 vi.mock("@/components/ui/sonner", () => ({ Toaster: () => null }));
-vi.mock("@/components/WorkoutResult", () => ({ WorkoutResult: ({ treino }: { treino: { titulo: string } }) => <div>{treino.titulo}</div> }));
-vi.mock("sonner", () => ({ toast: { error: (...args: unknown[]) => toastError(...args), success: (...args: unknown[]) => toastSuccess(...args) } }));
+vi.mock("@/components/WorkoutResult", () => ({
+  WorkoutResult: ({ treino }: { treino: { titulo: string } }) => <div>{treino.titulo}</div>,
+}));
+vi.mock("sonner", () => ({
+  toast: {
+    error: (...args: unknown[]) => toastError(...args),
+    success: (...args: unknown[]) => toastSuccess(...args),
+  },
+}));
 vi.mock("@/i18n/useLocale", () => ({ useLocale: () => "pt", localeParam: () => undefined }));
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: {
@@ -59,7 +72,12 @@ describe("workout generation flow", () => {
     const { Route } = await import("./{-$locale}/gerar");
     const Component = (Route as unknown as { component: React.ComponentType }).component;
     render(<Component />);
-    await waitFor(() => expect(navigate).toHaveBeenCalledWith({ to: "/{-$locale}/login", params: { locale: undefined } }));
+    await waitFor(() =>
+      expect(navigate).toHaveBeenCalledWith({
+        to: "/{-$locale}/login",
+        params: { locale: undefined },
+      }),
+    );
   });
 
   it("requires the first-step fields before continuing", async () => {
@@ -72,12 +90,25 @@ describe("workout generation flow", () => {
   });
 
   it("submits converted values and displays an auto-saved workout", async () => {
-    invoke.mockResolvedValue({ data: { treino: { titulo: "Plano pronto" }, savedWorkoutId: "w1" }, error: null });
+    invoke.mockResolvedValue({
+      data: { treino: { titulo: "Plano pronto" }, savedWorkoutId: "w1" },
+      error: null,
+    });
     await renderGenerator();
     await completeForm();
     fireEvent.click(screen.getByRole("button", { name: /gerar.focus.Peito/ }));
     fireEvent.click(screen.getByRole("button", { name: /gerar.generate/ }));
-    await waitFor(() => expect(invoke).toHaveBeenCalledWith("generate-workout", { body: expect.objectContaining({ idade: 30, dias: 3, tempo: 45, foco: ["Peito"], locale: "pt" }) }));
+    await waitFor(() =>
+      expect(invoke).toHaveBeenCalledWith("generate-workout", {
+        body: expect.objectContaining({
+          idade: 30,
+          dias: 3,
+          tempo: 45,
+          foco: ["Peito"],
+          locale: "pt",
+        }),
+      }),
+    );
     expect(await screen.findByText("Plano pronto")).toBeInTheDocument();
     expect(toastSuccess).toHaveBeenCalledWith("gerar.saved_auto");
   });

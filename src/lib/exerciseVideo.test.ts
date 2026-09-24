@@ -8,8 +8,11 @@ describe("youtubeSearchUrl", () => {
     ["es", "cómo hacer Sentadilla ejercicio técnica"],
     ["fr", "comment faire Squat exercice technique"],
   ] as const)("uses the %s search wording", (locale, query) => {
-    expect(youtubeSearchUrl(locale === "es" ? "Sentadilla" : locale === "pt" ? "Agachamento" : "Squat", locale)).toBe(
-      `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`,
-    );
+    expect(
+      youtubeSearchUrl(
+        locale === "es" ? "Sentadilla" : locale === "pt" ? "Agachamento" : "Squat",
+        locale,
+      ),
+    ).toBe(`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`);
   });
 });

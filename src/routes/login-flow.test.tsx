@@ -24,13 +24,15 @@ vi.mock("@/integrations/lovable/index", () => ({
   lovable: { auth: { signInWithOAuth: (...args: unknown[]) => signInWithOAuth(...args) } },
 }));
 vi.mock("@/integrations/supabase/client", () => ({
-  supabase: { auth: {
-    getSession: (...args: unknown[]) => getSession(...args),
-    onAuthStateChange: (callback: typeof authCallback) => {
-      authCallback = callback;
-      return { data: { subscription: { unsubscribe } } };
+  supabase: {
+    auth: {
+      getSession: (...args: unknown[]) => getSession(...args),
+      onAuthStateChange: (callback: typeof authCallback) => {
+        authCallback = callback;
+        return { data: { subscription: { unsubscribe } } };
+      },
     },
-  } },
+  },
 }));
 
 describe("Google login flow", () => {
@@ -48,15 +50,20 @@ describe("Google login flow", () => {
   it("starts Google login with a same-origin callback", async () => {
     await renderLogin();
     fireEvent.click(screen.getByRole("button", { name: /login.button/ }));
-    await waitFor(() => expect(signInWithOAuth).toHaveBeenCalledWith("google", {
-      redirect_uri: `${window.location.origin}/login`,
-    }));
+    await waitFor(() =>
+      expect(signInWithOAuth).toHaveBeenCalledWith("google", {
+        redirect_uri: `${window.location.origin}/login`,
+      }),
+    );
   });
 
   it("redirects only after a valid session is available", async () => {
     await renderLogin();
     act(() => authCallback("SIGNED_IN", { user: { id: "u1" } }));
-    expect(navigate).toHaveBeenCalledWith({ to: "/{-$locale}/gerar", params: { locale: undefined } });
+    expect(navigate).toHaveBeenCalledWith({
+      to: "/{-$locale}/gerar",
+      params: { locale: undefined },
+    });
   });
 
   it("shows errors returned by the login provider", async () => {

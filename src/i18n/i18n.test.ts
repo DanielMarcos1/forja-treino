@@ -7,7 +7,9 @@ import { detectBrowserLocale, isLocale } from "./index";
 
 function keys(value: unknown, prefix = ""): string[] {
   if (!value || typeof value !== "object" || Array.isArray(value)) return [prefix];
-  return Object.entries(value).flatMap(([key, child]) => keys(child, prefix ? `${prefix}.${key}` : key));
+  return Object.entries(value).flatMap(([key, child]) =>
+    keys(child, prefix ? `${prefix}.${key}` : key),
+  );
 }
 
 describe("locales", () => {

@@ -5,7 +5,8 @@ vi.mock("@tanstack/react-router", () => ({ createFileRoute: () => (config: unkno
 describe("sitemap", () => {
   it("serves all public pages in every language with alternate links", async () => {
     const { Route } = await import("./sitemap[.]xml");
-    const handler = (Route as unknown as { server: { handlers: { GET: () => Promise<Response> } } }).server.handlers.GET;
+    const handler = (Route as unknown as { server: { handlers: { GET: () => Promise<Response> } } })
+      .server.handlers.GET;
     const response = await handler();
     const xml = await response.text();
     expect(response.headers.get("Content-Type")).toBe("application/xml");

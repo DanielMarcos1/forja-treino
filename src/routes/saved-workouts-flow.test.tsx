@@ -14,13 +14,20 @@ const translation = {
   i18n: { language: "pt-BR" },
 };
 
-const rows = [{
-  id: "w1", title: "Treino inicial", summary: "Resumo",
-  dias_por_semana: 3, duracao_min: 45, created_at: "2026-09-01T12:00:00Z",
-}];
+const rows = [
+  {
+    id: "w1",
+    title: "Treino inicial",
+    summary: "Resumo",
+    dias_por_semana: 3,
+    duracao_min: 45,
+    created_at: "2026-09-01T12:00:00Z",
+  },
+];
 
 function queryBuilder(operation: "select" | "delete" | "update") {
-  const result = operation === "select" ? selectResult : operation === "delete" ? deleteResult : updateResult;
+  const result =
+    operation === "select" ? selectResult : operation === "delete" ? deleteResult : updateResult;
   const builder = {
     select: vi.fn(() => builder),
     order: vi.fn(() => result()),
@@ -42,7 +49,12 @@ vi.mock("react-i18next", async (importOriginal) => {
 });
 vi.mock("@/components/SiteChrome", () => ({ SiteHeader: () => null, SiteFooter: () => null }));
 vi.mock("@/components/ui/sonner", () => ({ Toaster: () => null }));
-vi.mock("sonner", () => ({ toast: { error: (...args: unknown[]) => toastError(...args), success: (...args: unknown[]) => toastSuccess(...args) } }));
+vi.mock("sonner", () => ({
+  toast: {
+    error: (...args: unknown[]) => toastError(...args),
+    success: (...args: unknown[]) => toastSuccess(...args),
+  },
+}));
 vi.mock("@/i18n/useLocale", () => ({ useLocale: () => "pt", localeParam: () => undefined }));
 vi.mock("@/integrations/supabase/client", () => ({
   supabase: {
@@ -61,7 +73,10 @@ describe("saved workouts list", () => {
     selectResult.mockResolvedValue({ data: rows, error: null });
     deleteResult.mockResolvedValue({ error: null });
     updateResult.mockResolvedValue({ error: null });
-    vi.stubGlobal("confirm", vi.fn(() => true));
+    vi.stubGlobal(
+      "confirm",
+      vi.fn(() => true),
+    );
   });
 
   async function renderList() {
@@ -76,7 +91,12 @@ describe("saved workouts list", () => {
     const { Route } = await import("./{-$locale}/meus-treinos.index");
     const Component = (Route as unknown as { component: React.ComponentType }).component;
     render(<Component />);
-    await waitFor(() => expect(navigate).toHaveBeenCalledWith({ to: "/{-$locale}/login", params: { locale: undefined } }));
+    await waitFor(() =>
+      expect(navigate).toHaveBeenCalledWith({
+        to: "/{-$locale}/login",
+        params: { locale: undefined },
+      }),
+    );
   });
 
   it("renders saved workouts and renames one", async () => {
