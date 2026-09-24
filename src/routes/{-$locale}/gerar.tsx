@@ -24,13 +24,27 @@ export const Route = createFileRoute("/{-$locale}/gerar")({
 });
 
 type Form = {
-  sexo: string; idade: string; nivel: string; objetivo: string; local: string;
-  dias: string; tempo: string; foco: string[]; restricoes: string;
+  sexo: string;
+  idade: string;
+  nivel: string;
+  objetivo: string;
+  local: string;
+  dias: string;
+  tempo: string;
+  foco: string[];
+  restricoes: string;
 };
 
 const initial: Form = {
-  sexo: "", idade: "", nivel: "", objetivo: "", local: "",
-  dias: "3", tempo: "45", foco: [], restricoes: "",
+  sexo: "",
+  idade: "",
+  nivel: "",
+  objetivo: "",
+  local: "",
+  dias: "3",
+  tempo: "45",
+  foco: [],
+  restricoes: "",
 };
 
 const SEX_VALUES = ["masculino", "feminino", "outro"];
@@ -66,7 +80,10 @@ function Gerar() {
 
   const update = <K extends keyof Form>(k: K, v: Form[K]) => setForm((f) => ({ ...f, [k]: v }));
   const toggleFoco = (f: string) =>
-    setForm((s) => ({ ...s, foco: s.foco.includes(f) ? s.foco.filter((x) => x !== f) : [...s.foco, f] }));
+    setForm((s) => ({
+      ...s,
+      foco: s.foco.includes(f) ? s.foco.filter((x) => x !== f) : [...s.foco, f],
+    }));
 
   const validStep = () => {
     if (step === 0) return form.sexo && form.idade && Number(form.idade) > 0 && form.nivel;
@@ -80,30 +97,38 @@ function Gerar() {
     try {
       const { data, error } = await supabase.functions.invoke("generate-workout", {
         body: {
-          sexo: form.sexo, idade: Number(form.idade), nivel: form.nivel,
-          objetivo: form.objetivo, local: form.local,
-          dias: Number(form.dias), tempo: Number(form.tempo),
-          foco: form.foco, restricoes: form.restricoes,
+          sexo: form.sexo,
+          idade: Number(form.idade),
+          nivel: form.nivel,
+          objetivo: form.objetivo,
+          local: form.local,
+          dias: Number(form.dias),
+          tempo: Number(form.tempo),
+          foco: form.foco,
+          restricoes: form.restricoes,
           locale,
         },
       });
       if (error) {
         const msg = error.message || "";
         const ctx = (error as { context?: { error?: string } }).context;
-        if (ctx?.error === "quota_exceeded" || msg.includes("quota_exceeded")) toast.error(t("gerar.err_quota"));
+        if (ctx?.error === "quota_exceeded" || msg.includes("quota_exceeded"))
+          toast.error(t("gerar.err_quota"));
         else if (msg.includes("429")) toast.error(t("gerar.err_rate"));
         else if (msg.includes("402")) toast.error(t("gerar.err_credits"));
         else toast.error(t("gerar.err_generic"));
         return;
       }
-      if (data?.error === "quota_exceeded") { toast.error(t("gerar.err_quota")); return; }
+      if (data?.error === "quota_exceeded") {
+        toast.error(t("gerar.err_quota"));
+        return;
+      }
       if (data?.treino) {
         setTreino(data.treino);
         setActiveDay(0);
         setSavedId(data.savedWorkoutId ?? null);
         if (data.savedWorkoutId) toast.success(t("gerar.saved_auto"));
-      }
-      else toast.error(t("gerar.err_response"));
+      } else toast.error(t("gerar.err_response"));
     } catch (e) {
       console.error(e);
       toast.error(t("gerar.err_unexpected"));
@@ -112,7 +137,11 @@ function Gerar() {
     }
   }
 
-  function reiniciar() { setTreino(null); setSavedId(null); setStep(0); }
+  function reiniciar() {
+    setTreino(null);
+    setSavedId(null);
+    setStep(0);
+  }
 
   if (!authChecked) {
     return (
@@ -123,7 +152,11 @@ function Gerar() {
   }
 
   const sexOpts = SEX_VALUES.map((v) => ({ value: v, label: t(`gerar.sex.${v}`) }));
-  const levelOpts = LEVEL_VALUES.map((v) => ({ value: v, label: t(`gerar.level.${v}`), desc: t(`gerar.level.${v}_desc`) }));
+  const levelOpts = LEVEL_VALUES.map((v) => ({
+    value: v,
+    label: t(`gerar.level.${v}`),
+    desc: t(`gerar.level.${v}_desc`),
+  }));
   const goalOpts = GOAL_VALUES.map((v) => ({ value: v, label: t(`gerar.goal.${v}`) }));
   const placeOpts = PLACE_VALUES.map((v) => ({ value: v, label: t(`gerar.place.${v}`) }));
 
@@ -136,23 +169,37 @@ function Gerar() {
           <>
             <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <h1 className="font-display text-2xl sm:text-3xl md:text-4xl">{t("gerar.title")}</h1>
-              <span className="text-sm text-muted-foreground">{t("gerar.step_of", { current: step + 1, total: 4 })}</span>
+              <span className="text-sm text-muted-foreground">
+                {t("gerar.step_of", { current: step + 1, total: 4 })}
+              </span>
             </div>
 
             <div className="mb-10 h-2 w-full overflow-hidden rounded-full bg-muted">
-              <div className="h-full bg-primary transition-all" style={{ width: `${((step + 1) / 4) * 100}%` }} />
+              <div
+                className="h-full bg-primary transition-all"
+                style={{ width: `${((step + 1) / 4) * 100}%` }}
+              />
             </div>
 
             <div className="rounded-3xl bg-card p-5 shadow-sm sm:p-8 md:p-10">
               {step === 0 && (
                 <Step title={t("gerar.step0_title")}>
                   <Field label={t("gerar.f_sex")}>
-                    <Choices value={form.sexo} onChange={(v) => update("sexo", v)} options={sexOpts} />
+                    <Choices
+                      value={form.sexo}
+                      onChange={(v) => update("sexo", v)}
+                      options={sexOpts}
+                    />
                   </Field>
                   <Field label={t("gerar.f_age")} htmlFor="idade">
                     <input
-                      id="idade" type="number" inputMode="numeric" min={10} max={100}
-                      value={form.idade} onChange={(e) => update("idade", e.target.value)}
+                      id="idade"
+                      type="number"
+                      inputMode="numeric"
+                      min={10}
+                      max={100}
+                      value={form.idade}
+                      onChange={(e) => update("idade", e.target.value)}
                       placeholder={t("gerar.f_age_placeholder")}
                       className="w-40 rounded-2xl border border-border bg-background px-4 py-3 text-lg outline-none focus:ring-2 focus:ring-ring"
                     />
@@ -160,8 +207,12 @@ function Gerar() {
                   <Field label={t("gerar.f_level")}>
                     <div className="grid gap-3 md:grid-cols-3">
                       {levelOpts.map((n) => (
-                        <button type="button" key={n.value} onClick={() => update("nivel", n.value)}
-                          className={`rounded-2xl border-2 p-4 text-left transition ${form.nivel === n.value ? "border-primary bg-primary/15 ring-2 ring-primary/30" : "border-border hover:border-foreground/30"}`}>
+                        <button
+                          type="button"
+                          key={n.value}
+                          onClick={() => update("nivel", n.value)}
+                          className={`rounded-2xl border-2 p-4 text-left transition ${form.nivel === n.value ? "border-primary bg-primary/15 ring-2 ring-primary/30" : "border-border hover:border-foreground/30"}`}
+                        >
                           <div className="font-semibold">{n.label}</div>
                           <div className="text-sm text-muted-foreground">{n.desc}</div>
                         </button>
@@ -174,10 +225,18 @@ function Gerar() {
               {step === 1 && (
                 <Step title={t("gerar.step1_title")}>
                   <Field label={t("gerar.f_goal")}>
-                    <Choices value={form.objetivo} onChange={(v) => update("objetivo", v)} options={goalOpts} />
+                    <Choices
+                      value={form.objetivo}
+                      onChange={(v) => update("objetivo", v)}
+                      options={goalOpts}
+                    />
                   </Field>
                   <Field label={t("gerar.f_place")}>
-                    <Choices value={form.local} onChange={(v) => update("local", v)} options={placeOpts} />
+                    <Choices
+                      value={form.local}
+                      onChange={(v) => update("local", v)}
+                      options={placeOpts}
+                    />
                   </Field>
                 </Step>
               )}
@@ -185,12 +244,24 @@ function Gerar() {
               {step === 2 && (
                 <Step title={t("gerar.step2_title")}>
                   <Field label={t("gerar.f_days")}>
-                    <Choices value={form.dias} onChange={(v) => update("dias", v)}
-                      options={[1, 2, 3, 4, 5, 6, 7].map((n) => ({ value: String(n), label: String(n) }))} />
+                    <Choices
+                      value={form.dias}
+                      onChange={(v) => update("dias", v)}
+                      options={[1, 2, 3, 4, 5, 6, 7].map((n) => ({
+                        value: String(n),
+                        label: String(n),
+                      }))}
+                    />
                   </Field>
                   <Field label={t("gerar.f_minutes")}>
-                    <Choices value={form.tempo} onChange={(v) => update("tempo", v)}
-                      options={[20, 30, 45, 60, 90].map((n) => ({ value: String(n), label: t("gerar.minutes_unit", { n }) }))} />
+                    <Choices
+                      value={form.tempo}
+                      onChange={(v) => update("tempo", v)}
+                      options={[20, 30, 45, 60, 90].map((n) => ({
+                        value: String(n),
+                        label: t("gerar.minutes_unit", { n }),
+                      }))}
+                    />
                   </Field>
                 </Step>
               )}
@@ -202,8 +273,12 @@ function Gerar() {
                       {FOCOS.map((f) => {
                         const on = form.foco.includes(f);
                         return (
-                          <button type="button" key={f} onClick={() => toggleFoco(f)}
-                            className={`rounded-full border px-4 py-2 text-sm font-medium transition ${on ? "border-primary bg-primary text-primary-foreground" : "border-border hover:border-foreground/30"}`}>
+                          <button
+                            type="button"
+                            key={f}
+                            onClick={() => toggleFoco(f)}
+                            className={`rounded-full border px-4 py-2 text-sm font-medium transition ${on ? "border-primary bg-primary text-primary-foreground" : "border-border hover:border-foreground/30"}`}
+                          >
                             {t(`gerar.focus.${f}`)}
                           </button>
                         );
@@ -211,27 +286,48 @@ function Gerar() {
                     </div>
                   </Field>
                   <Field label={t("gerar.f_restrictions")} htmlFor="restricoes">
-                    <textarea id="restricoes" value={form.restricoes} onChange={(e) => update("restricoes", e.target.value)}
-                      placeholder={t("gerar.f_restrictions_placeholder")} rows={4}
-                      className="w-full rounded-2xl border border-border bg-background px-4 py-3 outline-none focus:ring-2 focus:ring-ring" />
+                    <textarea
+                      id="restricoes"
+                      value={form.restricoes}
+                      onChange={(e) => update("restricoes", e.target.value)}
+                      placeholder={t("gerar.f_restrictions_placeholder")}
+                      rows={4}
+                      className="w-full rounded-2xl border border-border bg-background px-4 py-3 outline-none focus:ring-2 focus:ring-ring"
+                    />
                   </Field>
                 </Step>
               )}
 
               <div className="mt-10 flex items-center justify-between">
-                <button type="button" onClick={() => setStep((s) => Math.max(0, s - 1))} disabled={step === 0 || loading}
-                  className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-foreground/80 transition hover:bg-foreground/5 disabled:opacity-40">
+                <button
+                  type="button"
+                  onClick={() => setStep((s) => Math.max(0, s - 1))}
+                  disabled={step === 0 || loading}
+                  className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-foreground/80 transition hover:bg-foreground/5 disabled:opacity-40"
+                >
                   <ArrowLeft className="h-4 w-4" /> {t("gerar.back")}
                 </button>
                 {step < 3 ? (
-                  <button type="button" onClick={() => setStep((s) => s + 1)} disabled={!validStep()}
-                    className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:brightness-95 disabled:opacity-50">
+                  <button
+                    type="button"
+                    onClick={() => setStep((s) => s + 1)}
+                    disabled={!validStep()}
+                    className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:brightness-95 disabled:opacity-50"
+                  >
                     {t("gerar.next")} <ArrowRight className="h-4 w-4" />
                   </button>
                 ) : (
-                  <button type="button" onClick={gerar} disabled={loading}
-                    className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition hover:brightness-95 disabled:opacity-60">
-                    {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Flame className="h-4 w-4" />}
+                  <button
+                    type="button"
+                    onClick={gerar}
+                    disabled={loading}
+                    className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition hover:brightness-95 disabled:opacity-60"
+                  >
+                    {loading ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Flame className="h-4 w-4" />
+                    )}
                     {loading ? t("gerar.generating") : t("gerar.generate")}
                   </button>
                 )}
@@ -245,7 +341,12 @@ function Gerar() {
                 <BookmarkCheck className="h-3.5 w-3.5 text-primary" /> {t("gerar.saved_auto")}
               </div>
             )}
-            <WorkoutResult treino={treino} activeDay={activeDay} setActiveDay={setActiveDay} onRestart={reiniciar} />
+            <WorkoutResult
+              treino={treino}
+              activeDay={activeDay}
+              setActiveDay={setActiveDay}
+              onRestart={reiniciar}
+            />
           </>
         )}
       </main>
@@ -263,25 +364,45 @@ function Step({ title, children }: { title: string; children: React.ReactNode })
   );
 }
 
-function Field({ label, htmlFor, children }: { label: string; htmlFor?: string; children: React.ReactNode }) {
+function Field({
+  label,
+  htmlFor,
+  children,
+}: {
+  label: string;
+  htmlFor?: string;
+  children: React.ReactNode;
+}) {
   return (
     <div>
-      <label htmlFor={htmlFor} className="mb-3 block text-sm font-semibold text-foreground/80">{label}</label>
+      <label htmlFor={htmlFor} className="mb-3 block text-sm font-semibold text-foreground/80">
+        {label}
+      </label>
       {children}
     </div>
   );
 }
 
-function Choices({ value, onChange, options }: {
-  value: string; onChange: (v: string) => void; options: { value: string; label: string }[];
+function Choices({
+  value,
+  onChange,
+  options,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: { value: string; label: string }[];
 }) {
   return (
     <div className="flex flex-wrap gap-2">
       {options.map((o) => {
         const on = value === o.value;
         return (
-          <button key={o.value} type="button" onClick={() => onChange(o.value)}
-            className={`rounded-full border px-5 py-2.5 text-sm font-medium transition ${on ? "border-primary bg-primary text-primary-foreground" : "border-border hover:border-foreground/30"}`}>
+          <button
+            key={o.value}
+            type="button"
+            onClick={() => onChange(o.value)}
+            className={`rounded-full border px-5 py-2.5 text-sm font-medium transition ${on ? "border-primary bg-primary text-primary-foreground" : "border-border hover:border-foreground/30"}`}
+          >
             {o.label}
           </button>
         );

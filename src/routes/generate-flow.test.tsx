@@ -116,22 +116,20 @@ describe("workout generation flow", () => {
     expect(toastSuccess).toHaveBeenCalledWith("gerar.saved_auto");
   });
 
-  it.each([
-    "academia",
-    "casa_equipamentos",
-    "casa_sem_equipamentos",
-    "ar_livre",
-  ])("submits the supported training place %s", async (place) => {
-    await renderGenerator();
-    await completeForm({ place });
-    fireEvent.click(screen.getByRole("button", { name: /gerar.generate/ }));
-    await waitFor(() =>
-      expect(invoke).toHaveBeenCalledWith(
-        "generate-workout",
-        expect.objectContaining({ body: expect.objectContaining({ local: place }) }),
-      ),
-    );
-  });
+  it.each(["academia", "casa_equipamentos", "casa_sem_equipamentos", "ar_livre"])(
+    "submits the supported training place %s",
+    async (place) => {
+      await renderGenerator();
+      await completeForm({ place });
+      fireEvent.click(screen.getByRole("button", { name: /gerar.generate/ }));
+      await waitFor(() =>
+        expect(invoke).toHaveBeenCalledWith(
+          "generate-workout",
+          expect.objectContaining({ body: expect.objectContaining({ local: place }) }),
+        ),
+      );
+    },
+  );
 
   it.each(["hipertrofia", "emagrecimento", "condicionamento", "forca", "mobilidade"])(
     "submits the supported training goal %s",
