@@ -42,6 +42,7 @@ function clampInt(v: unknown, min: number, max: number, fallback: number): numbe
 function sanitizeText(v: unknown, maxLen: number): string {
   if (typeof v !== "string") return "";
   return v
+    // eslint-disable-next-line no-control-regex
     .replace(/[\r\n\t\u0000-\u001F\u007F]/g, " ")
     .trim()
     .slice(0, maxLen);
@@ -49,25 +50,41 @@ function sanitizeText(v: unknown, maxLen: number): string {
 
 const ALLOWED_LOCALES = ["pt", "en", "es", "fr"];
 
-function validateInput(raw: any): { ok: true; data: any } | { ok: false; error: string } {
-  if (!raw || typeof raw !== "object") return { ok: false, error: "Payload inválido" };
+type ValidatedInput = {
+  sexo: string;
+  nivel: string;
+  objetivo: string;
+  local: string;
+  idade: number;
+  dias: number;
+  tempo: number;
+  foco: string[];
+  restricoes: string;
+  locale: string;
+};
 
-  const sexo = String(raw.sexo ?? "").toLowerCase();
+function validateInput(
+  raw: unknown,
+): { ok: true; data: ValidatedInput } | { ok: false; error: string } {
+  if (!raw || typeof raw !== "object") return { ok: false, error: "Payload inválido" };
+  const input = raw as Record<string, unknown>;
+
+  const sexo = String(input.sexo ?? "").toLowerCase();
   if (!ALLOWED_SEXO.includes(sexo)) return { ok: false, error: "Sexo inválido" };
 
-  const nivel = String(raw.nivel ?? "").toLowerCase();
+  const nivel = String(input.nivel ?? "").toLowerCase();
   if (!ALLOWED_NIVEL.includes(nivel)) return { ok: false, error: "Nível inválido" };
 
-  const objetivo = String(raw.objetivo ?? "").toLowerCase();
+  const objetivo = String(input.objetivo ?? "").toLowerCase();
   if (!ALLOWED_OBJETIVO.includes(objetivo)) return { ok: false, error: "Objetivo inválido" };
 
-  const localRaw = String(raw.local ?? "").toLowerCase();
+  const localRaw = String(input.local ?? "").toLowerCase();
   const local = LOCAL_ALIASES[localRaw] ?? localRaw;
   if (!ALLOWED_LOCAL.includes(local)) return { ok: false, error: "Local inválido" };
 
-  const idade = clampInt(raw.idade, 10, 100, 25);
-  const dias = clampInt(raw.dias, 1, 7, 3);
-  const tempo = clampInt(raw.tempo, 15, 180, 45);
+  const idade = clampInt(input.idade, 10, 100, 25);
+  const dias = clampInt(input.dias, 1, 7, 3);
+  const tempo = clampInt(input.tempo, 15, 180, 45);
 
   const ALLOWED_FOCO = [
     "Peito",
@@ -81,14 +98,14 @@ function validateInput(raw: any): { ok: true; data: any } | { ok: false; error: 
     "Cardio",
   ];
   let foco: string[] = [];
-  if (Array.isArray(raw.foco)) {
-    foco = raw.foco
+  if (Array.isArray(input.foco)) {
+    foco = input.foco
       .filter((f: unknown) => typeof f === "string" && ALLOWED_FOCO.includes(f))
       .slice(0, 10);
   }
 
-  const restricoes = sanitizeText(raw.restricoes, 500);
-  const localeRaw = String(raw.locale ?? "pt").toLowerCase();
+  const restricoes = sanitizeText(input.restricoes, 500);
+  const localeRaw = String(input.locale ?? "pt").toLowerCase();
   const locale = ALLOWED_LOCALES.includes(localeRaw) ? localeRaw : "pt";
 
   return {
