@@ -10,6 +10,11 @@ const corsHeaders = {
 const ALLOWED_SEXO = ["masculino", "feminino", "outro", "prefiro_nao_dizer"];
 const ALLOWED_NIVEL = ["iniciante", "intermediario", "intermediário", "avancado", "avançado"];
 const ALLOWED_OBJETIVO = ["hipertrofia", "emagrecimento", "condicionamento", "forca", "força", "mobilidade", "resistencia", "resistência"];
+const LOCAL_ALIASES: Record<string, string> = {
+  "casa-equip": "casa_equipamentos",
+  "casa-livre": "casa_sem_equipamentos",
+  "ar-livre": "ar_livre",
+};
 const ALLOWED_LOCAL = ["academia", "casa_equipamentos", "casa_sem_equipamentos", "ar_livre", "casa", "outro"];
 
 function clampInt(v: unknown, min: number, max: number, fallback: number): number {
@@ -37,7 +42,8 @@ function validateInput(raw: any): { ok: true; data: any } | { ok: false; error: 
   const objetivo = String(raw.objetivo ?? "").toLowerCase();
   if (!ALLOWED_OBJETIVO.includes(objetivo)) return { ok: false, error: "Objetivo inválido" };
 
-  const local = String(raw.local ?? "").toLowerCase();
+  const localRaw = String(raw.local ?? "").toLowerCase();
+  const local = LOCAL_ALIASES[localRaw] ?? localRaw;
   if (!ALLOWED_LOCAL.includes(local)) return { ok: false, error: "Local inválido" };
 
   const idade = clampInt(raw.idade, 10, 100, 25);

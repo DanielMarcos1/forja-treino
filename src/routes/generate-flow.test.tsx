@@ -56,13 +56,16 @@ describe("workout generation flow", () => {
     await screen.findByText("gerar.step0_title");
   }
 
-  async function completeForm() {
+  async function completeForm({
+    goal = "hipertrofia",
+    place = "academia",
+  }: { goal?: string; place?: string } = {}) {
     fireEvent.click(screen.getByRole("button", { name: "gerar.sex.masculino" }));
     fireEvent.change(screen.getByLabelText("gerar.f_age"), { target: { value: "30" } });
     fireEvent.click(screen.getByRole("button", { name: /gerar.level.iniciante/ }));
     fireEvent.click(screen.getByRole("button", { name: /gerar.next/ }));
-    fireEvent.click(screen.getByRole("button", { name: "gerar.goal.hipertrofia" }));
-    fireEvent.click(screen.getByRole("button", { name: "gerar.place.academia" }));
+    fireEvent.click(screen.getByRole("button", { name: `gerar.goal.${goal}` }));
+    fireEvent.click(screen.getByRole("button", { name: `gerar.place.${place}` }));
     fireEvent.click(screen.getByRole("button", { name: /gerar.next/ }));
     fireEvent.click(screen.getByRole("button", { name: /gerar.next/ }));
   }
@@ -112,6 +115,38 @@ describe("workout generation flow", () => {
     expect(await screen.findByText("Plano pronto")).toBeInTheDocument();
     expect(toastSuccess).toHaveBeenCalledWith("gerar.saved_auto");
   });
+
+  it.each([
+    "academia",
+    "casa_equipamentos",
+    "casa_sem_equipamentos",
+    "ar_livre",
+  ])("submits the supported training place %s", async (place) => {
+    await renderGenerator();
+    await completeForm({ place });
+    fireEvent.click(screen.getByRole("button", { name: /gerar.generate/ }));
+    await waitFor(() =>
+      expect(invoke).toHaveBeenCalledWith(
+        "generate-workout",
+        expect.objectContaining({ body: expect.objectContaining({ local: place }) }),
+      ),
+    );
+  });
+
+  it.each(["hipertrofia", "emagrecimento", "condicionamento", "forca", "mobilidade"])(
+    "submits the supported training goal %s",
+    async (goal) => {
+      await renderGenerator();
+      await completeForm({ goal });
+      fireEvent.click(screen.getByRole("button", { name: /gerar.generate/ }));
+      await waitFor(() =>
+        expect(invoke).toHaveBeenCalledWith(
+          "generate-workout",
+          expect.objectContaining({ body: expect.objectContaining({ objetivo: goal }) }),
+        ),
+      );
+    },
+  );
 
   it.each([
     [{ message: "quota_exceeded" }, "gerar.err_quota"],

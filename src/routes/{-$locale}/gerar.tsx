@@ -36,7 +36,7 @@ const initial: Form = {
 const SEX_VALUES = ["masculino", "feminino", "outro"];
 const LEVEL_VALUES = ["iniciante", "intermediario", "avancado"];
 const GOAL_VALUES = ["hipertrofia", "emagrecimento", "condicionamento", "forca", "mobilidade"];
-const PLACE_VALUES = ["academia", "casa-equip", "casa-livre", "ar-livre"];
+const PLACE_VALUES = ["academia", "casa_equipamentos", "casa_sem_equipamentos", "ar_livre"];
 const FOCOS = ["Peito", "Costas", "Pernas", "Glúteos", "Braços", "Core", "Cardio"];
 
 function Gerar() {
