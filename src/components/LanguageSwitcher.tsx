@@ -26,7 +26,7 @@ function Flag({ country, className = "" }: { country: string; className?: string
 
 const LOCALE_KEY = "forja.locale";
 
-function stripLocale(pathname: string): string {
+export function stripLocale(pathname: string): string {
   const m = pathname.match(/^\/(en|es|fr)(\/.*)?$/);
   if (!m) return pathname || "/";
   return m[2] || "/";
@@ -88,7 +88,13 @@ export function LanguageSwitcher() {
           fill="none"
           aria-hidden
         >
-          <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path
+            d="M3 4.5L6 7.5L9 4.5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </button>
 
@@ -116,7 +122,9 @@ export function LanguageSwitcher() {
                 >
                   <Flag country={item.country} />
                   <span className="flex-1 text-left">{item.name}</span>
-                  <span className="text-xs font-semibold tracking-wide text-foreground/50">{item.code}</span>
+                  <span className="text-xs font-semibold tracking-wide text-foreground/50">
+                    {item.code}
+                  </span>
                 </button>
               </li>
             );
