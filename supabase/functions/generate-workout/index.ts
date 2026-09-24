@@ -41,11 +41,13 @@ function clampInt(v: unknown, min: number, max: number, fallback: number): numbe
 
 function sanitizeText(v: unknown, maxLen: number): string {
   if (typeof v !== "string") return "";
-  return v
-    // eslint-disable-next-line no-control-regex
-    .replace(/[\r\n\t\u0000-\u001F\u007F]/g, " ")
-    .trim()
-    .slice(0, maxLen);
+  return (
+    v
+      // eslint-disable-next-line no-control-regex
+      .replace(/[\r\n\t\u0000-\u001F\u007F]/g, " ")
+      .trim()
+      .slice(0, maxLen)
+  );
 }
 
 const ALLOWED_LOCALES = ["pt", "en", "es", "fr"];
