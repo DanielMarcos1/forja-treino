@@ -3,6 +3,7 @@ import { cn } from "./utils";
 
 describe("cn", () => {
   it("combines conditional classes and resolves Tailwind conflicts", () => {
-    expect(cn("px-2", false && "hidden", "px-4", { block: true })).toBe("px-4 block");
+    const optionalClass: string | false = false;
+    expect(cn("px-2", optionalClass, "px-4", { block: true })).toBe("px-4 block");
   });
 });
