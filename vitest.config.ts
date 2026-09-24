@@ -26,6 +26,12 @@ export default defineConfig({
         "src/components/LanguageSwitcher.tsx"
       ],
       exclude: ["src/**/*.test.*", "src/lib/exerciseLibrary/index.json"],
+      thresholds: {
+        statements: 85,
+        branches: 80,
+        functions: 85,
+        lines: 85,
+      },
     },
   },
 });
