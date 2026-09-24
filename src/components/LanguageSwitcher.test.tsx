@@ -10,7 +10,10 @@ vi.mock("@tanstack/react-router", () => ({
   useRouterState: ({ select }: { select: (state: unknown) => unknown }) =>
     select({ location: { pathname } }),
 }));
-vi.mock("react-i18next", () => ({ useTranslation: () => ({ t: () => "Idioma" }) }));
+vi.mock("react-i18next", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("react-i18next")>();
+  return { ...actual, useTranslation: () => ({ t: () => "Idioma" }) };
+});
 vi.mock("@/i18n/useLocale", () => ({ useLocale: () => "pt" }));
 
 describe("LanguageSwitcher", () => {

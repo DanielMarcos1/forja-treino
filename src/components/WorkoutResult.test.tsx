@@ -38,7 +38,7 @@ describe("WorkoutResult", () => {
   it("renders the selected day and switches days", () => {
     const setActiveDay = vi.fn();
     render(<WorkoutResult treino={treino} activeDay={0} setActiveDay={setActiveDay} />);
-    expect(screen.getByText("gerar.day_label:A — Peito")).toBeInTheDocument();
+    expect(screen.getAllByText("gerar.day_label:A — Peito")).toHaveLength(2);
     fireEvent.click(screen.getByRole("button", { name: "gerar.day_label:B" }));
     expect(setActiveDay).toHaveBeenCalledWith(1);
   });
