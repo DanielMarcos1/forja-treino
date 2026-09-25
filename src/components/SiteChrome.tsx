@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import faviconUrl from "@/assets/favicon.svg?url";
+import forjaLogo from "@/assets/forja-logo.png.asset.json";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useLocale } from "@/i18n/useLocale";
 import { localeParam } from "@/i18n/useLocale";
@@ -14,7 +14,7 @@ export function Logo({ className = "" }: { className?: string }) {
       params={{ locale: localeParam(locale) }}
       className={`flex items-center gap-2 font-display font-extrabold text-xl text-foreground ${className}`}
     >
-      <img src={faviconUrl} alt="Forja" className="h-8 w-8" />
+      <img src={forjaLogo.url} alt="Forja" className="h-9 w-9 rounded-lg" />
       Forja
     </Link>
   );
