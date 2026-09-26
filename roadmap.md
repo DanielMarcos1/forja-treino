@@ -6,3 +6,6 @@
 - [x] Exportar apresentação em PDF
 - [x] Criar roteiro de fala, fontes e checklist de dados pendentes
 - [x] Inspecionar visualmente todas as páginas e corrigir problemas
+- [x] Criar versões em inglês do PowerPoint, PDF e roteiro
+- [x] Inspecionar visualmente as 16 páginas em inglês
+- [x] Adicionar as versões em inglês à coleção do pitch
